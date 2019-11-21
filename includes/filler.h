@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/21 17:03:01 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/21 18:22:33 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "get_next_line.h"
+
+# define IS_DIGIT(x) (x >= 0 && x <= 9)
 
 typedef struct	s_coords
 {
@@ -44,7 +46,7 @@ typedef struct	s_map
 /*
 ** Fetch Information Functions
 */
-void		fetch_player(t_map *map);
+void			fetch_player(t_map *map);
 /*
 ** Logic Functions
 */
