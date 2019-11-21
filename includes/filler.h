@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/21 18:51:15 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/21 19:24:57 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ typedef struct	s_token
 
 typedef struct	s_map
 {
-	size_t	lines;
-	size_t	columns;
+	int		lines;
+	int		columns;
 	char	**map;
-	size_t	my_area;
-	size_t	enemy_area;
+	int		my_area;
+	int		enemy_area;
 	int		player;
 }				t_map;
 
@@ -51,6 +51,9 @@ void			fetch_player(t_map *map);
 void			feed_data(t_map *map, t_token *token);
 void			fetch_mapsize(t_map *map, char *str);
 void			fetch_map(t_map *map);
+void			fetch_tokensize(t_token *token, char *str);
+void			fetch_token(t_token token);
+
 /*
 ** Logic Functions
 */
@@ -59,6 +62,7 @@ void			fetch_map(t_map *map);
 **	Print Functions
 */
 
+void			print_map(t_map *map);
 void			filler_error(char *str);
 
 /*

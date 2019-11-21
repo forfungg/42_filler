@@ -6,7 +6,7 @@
 #    By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 18:30:20 by jnovotny          #+#    #+#              #
-#    Updated: 2019/11/21 18:49:38 by jnovotny         ###   ########.fr        #
+#    Updated: 2019/11/21 19:19:11 by jnovotny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ LIB = ../printf/libftprintf.a
 FTS =	main.c \
 		datafeed.c \
 		error.c \
-		tools.c
+		tools.c \
+		printer.c
 
 FTO = $(FTS.c=.o)
 
@@ -46,18 +47,16 @@ all: $(NAME)
 libft:
 	@make -C ../printf
 
-$(NAME): libft
+$(NAME):
 	@/bin/mkdir -p $(O_DIR)
 	@gcc -o $(NAME) $(CFLAGS) -I$(I_DIR) -I$(LIB_I) $(LIB) $(SRCS)
 	@echo "$(C_GREEN)[$(C_BLUE)$(NAME)$(C_GREEN) was compiled]$(C_RES)"
 
 clean:
-	@make clean -C ../printf
 	@/bin/rm -rf $(O_DIR)
 	@echo "$(C_RED)[Objects deleted!]$(C_RES)"
 
 fclean: clean
-	# @make fclean -C ../printf
 	@/bin/rm -f $(NAME)
 	@echo "$(C_RED)[Removed $(NAME)]$(C_RES)"
 
