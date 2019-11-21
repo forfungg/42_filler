@@ -6,7 +6,7 @@
 #    By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 18:30:20 by jnovotny          #+#    #+#              #
-#    Updated: 2019/11/21 18:42:50 by jnovotny         ###   ########.fr        #
+#    Updated: 2019/11/21 18:49:38 by jnovotny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ CFLAGS = -Wall -Werror -Wextra
 all: $(NAME)
 
 libft:
-	@../printf/make
+	@make -C ../printf
 
 $(NAME): libft
 	@/bin/mkdir -p $(O_DIR)
@@ -52,10 +52,12 @@ $(NAME): libft
 	@echo "$(C_GREEN)[$(C_BLUE)$(NAME)$(C_GREEN) was compiled]$(C_RES)"
 
 clean:
+	@make clean -C ../printf
 	@/bin/rm -rf $(O_DIR)
 	@echo "$(C_RED)[Objects deleted!]$(C_RES)"
 
 fclean: clean
+	# @make fclean -C ../printf
 	@/bin/rm -f $(NAME)
 	@echo "$(C_RED)[Removed $(NAME)]$(C_RES)"
 

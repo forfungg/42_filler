@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:36:03 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/21 18:29:29 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/21 18:51:50 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		main()
 	fetch_player(&map);
 	ft_printf("{CYAN}{INV}I'M PLAYER %d{EOC}\n", map.player);
 	return (0);
-	feed_data(&map, &token)
+	feed_data(&map, &token);
 
 /*
 	- get player number?
@@ -53,4 +53,5 @@ int		main()
 	- evaluate strategy
 	- place token
 	- print the map */
+	return(0);
 }

@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/21 18:22:33 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/21 18:51:15 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@ typedef struct	s_map
 /*
 ** Fetch Information Functions
 */
+
 void			fetch_player(t_map *map);
+void			feed_data(t_map *map, t_token *token);
+void			fetch_mapsize(t_map *map, char *str);
+void			fetch_map(t_map *map);
 /*
 ** Logic Functions
 */
@@ -56,4 +60,11 @@ void			fetch_player(t_map *map);
 */
 
 void			filler_error(char *str);
+
+/*
+** Supportive tools
+*/
+
+void			skip_line();
+
 #endif
