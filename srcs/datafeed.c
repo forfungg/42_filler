@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:45:30 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/21 19:25:38 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/22 14:27:09 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	feed_data(t_map *map, t_token *token)
 {
 	char *str;
 
-	get_next_line(0, &str);
+	while (get_next_line(0, &str) > 0)
+	{
 	if (ft_strnequ(str, "Plateau", 7))
 	{	
 		fetch_mapsize(map, str);
@@ -42,11 +43,11 @@ void	feed_data(t_map *map, t_token *token)
 	else if (ft_strnequ(str, "Piece", 5))
 	{
 		fetch_tokensize(token, str);
-		// fetch_token(token);
+		fetch_token(token);
+		place_token(map, token);
 	}
-	else
-		feed_data(map, token);
 	free(str);
+	}
 }
 
 void	fetch_mapsize(t_map *map, char *str)
@@ -65,7 +66,7 @@ void	fetch_mapsize(t_map *map, char *str)
 void	fetch_map(t_map *map)
 {
 	char	*str;
-	int	i;
+	int		i;
 
 	skip_line();
 	i = 0;
@@ -80,7 +81,6 @@ void	fetch_map(t_map *map)
 		free(str);
 		i++;
 	}
-	print_map(map);
 }
 
 void	fetch_tokensize(t_token *token, char *str)
@@ -96,7 +96,81 @@ void	fetch_tokensize(t_token *token, char *str)
 	token->columns = ft_atoi(&str[i]);
 }
 
-// void	fetch_token(t_token *token)
-// {
+void	fetch_token(t_token *token)
+{
+	int		i;
+
+	i = 0;
+	token->map = (char **)malloc(sizeof(char *) * (token->lines + 1)); /*protect*/
+	token->map[token->lines] = NULL;
+	while (i < token->lines)
+	{
+		if (0 == get_next_line(0, &token->map[i]))
+			return;
+		if ((int)ft_strlen(token->map[i]) != token->columns)
+			filler_error("Token line lenght error");
+		i++;
+	}
+}
+
+void	transcribe_token(t_token *token)
+{
+	int i;
+	int j;
+	int	t;
 	
-// }
+	init_tiles(token);
+	i = 0;
+	t = 0;
+	while (i < token->lines)
+	{
+		j = 0;
+		while (j < token->columns)
+		{
+			if (token->map[i][j] == '*')
+			{
+				token->tiles[t].x = j;
+				token->tiles[t].y = i;
+			}
+			j++;
+		}
+		i++;
+	}
+	anchor_token(token, 0);
+}
+
+void	init_tiles(t_token *token)
+{
+	int i;
+	int j;
+	
+	token->cnt_tiles = 0;
+	i = 0;
+	while (i < token->lines)
+	{
+		j = 0;
+		while (j < token->columns)
+		{
+			token->map[i][j] == '*' ? token->cnt_tiles++ : 0;
+			j++;
+		}
+		i++;
+	}
+	token->tiles = (t_coords *)malloc(sizeof(t_coords) * token->cnt_tiles);
+}
+
+void	anchor_token(t_token *token, int i)
+{
+	int		x;
+	int		y;
+
+	x = token->tiles[i].x;
+	y = token->tiles[i].y;
+	i = 0;
+	while (i < token->cnt_tiles)
+	{
+		token->tiles[i].x -= x;
+		token->tiles[i].y -= y;
+		i++;
+	}
+}

@@ -6,7 +6,7 @@
 #    By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 18:30:20 by jnovotny          #+#    #+#              #
-#    Updated: 2019/11/21 19:19:11 by jnovotny         ###   ########.fr        #
+#    Updated: 2019/11/22 10:26:08 by jnovotny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ FTS =	main.c \
 		datafeed.c \
 		error.c \
 		tools.c \
-		printer.c
+		printer.c \
+		place_token.c
 
 FTO = $(FTS.c=.o)
 

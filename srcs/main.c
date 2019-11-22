@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:36:03 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/21 19:26:29 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/22 11:15:53 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ int		main()
 	ft_bzero((void*)&token, sizeof(t_token));
 	ft_bzero((void*)&map, sizeof(t_map));
 	fetch_player(&map);
-	ft_printf("\n{CYAN}{INV}I'M PLAYER %d{EOC}\n", map.player);
-	feed_data(&map, &token);
+	while(1)
+	{
+		feed_data(&map, &token);
+	}
 
 /*
 	- get player number?

@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printer.c                                          :+:      :+:    :+:   */
+/*   place_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 19:10:46 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/22 10:00:48 by jnovotny         ###   ########.fr       */
+/*   Created: 2019/11/22 10:22:41 by jnovotny          #+#    #+#             */
+/*   Updated: 2019/11/22 14:21:26 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void	print_map(t_map *map)
+void	place_token(t_map *map, t_token *token)
 {
-	int i;
-
-	i = 0;
-	ft_printf("\n{GREEN}{U}P%d Current board{EOC}\n", map->player);
-	ft_printf("Lines: %d | Columns: %d\n", map->lines, map->columns);
-	while (i < map->lines)
-	{
-		ft_printf("%.3d %s\n", i, map->map[i]);
-		i++;
-	}
+	
+	ft_printf("19 28");
+	ft_bzero((void*)token, sizeof(t_token));
+	ft_bzero((void*)map, sizeof(t_map));
+	map->map = NULL;
+	token->map = NULL;
 }
