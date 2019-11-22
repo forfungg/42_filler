@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:45:30 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/22 14:27:09 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/22 15:27:00 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	fetch_player(t_map *map)
 	if (ft_strnequ(str, "$$$ exec", 8) && map->player == 0)
 	{
 		if (ft_strstr(str, "p1"))
-			map->player = 1;
+			map->player = 'O';
 		else if (ft_strstr(str, "p2"))
-			map->player = 2;
+			map->player = 'X';
 		else
 			filler_error("Player order not found!");
 	}
@@ -129,8 +129,8 @@ void	transcribe_token(t_token *token)
 		{
 			if (token->map[i][j] == '*')
 			{
-				token->tiles[t].x = j;
-				token->tiles[t].y = i;
+				TX(i) = j;
+				TY(i) = i;
 			}
 			j++;
 		}
@@ -157,20 +157,4 @@ void	init_tiles(t_token *token)
 		i++;
 	}
 	token->tiles = (t_coords *)malloc(sizeof(t_coords) * token->cnt_tiles);
-}
-
-void	anchor_token(t_token *token, int i)
-{
-	int		x;
-	int		y;
-
-	x = token->tiles[i].x;
-	y = token->tiles[i].y;
-	i = 0;
-	while (i < token->cnt_tiles)
-	{
-		token->tiles[i].x -= x;
-		token->tiles[i].y -= y;
-		i++;
-	}
 }

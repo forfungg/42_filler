@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:10:46 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/22 10:00:48 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/22 16:18:57 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,30 @@ void	print_map(t_map *map)
 		ft_printf("%.3d %s\n", i, map->map[i]);
 		i++;
 	}
+}
+
+void	adjust_out(t_token *token, t_coords *place)
+{
+	t_coords *anchor;
+
+	
+	anchor->y = 0;
+	place->x -= TX(0);
+	place->y -= TY(0);
+	while (anchor->y < token->lines)
+	{
+		anchor->x = 0;
+		while (anchor->x < token->columns)
+		{
+			if (IS_STAR(anchor->x, anchor->y))
+			{
+				place->x -= anchor->x;
+				place->y -= anchor->y;
+				return ;
+			}
+			anchor->x++;
+		}
+		anchor->y++;
+	}
+
 }
