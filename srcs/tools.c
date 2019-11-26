@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 18:25:47 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/26 20:30:02 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/26 20:56:11 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ void	anchor_token(t_token *token, int i)
 
 	x = TX(i);
 	y = TY(i);
+	ft_log("Anchor @ Tile[%d]\n", i);
 	i = 0;
 	while (i < token->cnt_tiles)
 	{
 		TX(i) -= x;
 		TY(i) -= y;
+		ft_log("Tile[%d] @ %d x %d \n", i, token->tiles[i].y, token->tiles[i].x);
 		i++;
 	}
 }

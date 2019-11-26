@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:36:03 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/26 17:58:34 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/26 20:58:23 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ int		main()
 	}
 
 /*
+	To-Do (Wed 27/11)
+	+ change placing algorithm (fucked up atm)
+	+ create test environment, copy-pasta is shit
+
+	
 	- get player number?
 	- fetch the map
 		Plateau 15 17:					if "Plateau" 	-> atoi lines && atoi columns

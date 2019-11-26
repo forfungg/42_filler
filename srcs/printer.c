@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:10:46 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/26 20:42:45 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/26 20:52:49 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	adjust_out(t_token *token, t_coords *place)
 	t_coords anchor;
 
 	anchor.y = 0;
+	anchor_token(token, 0);
 	place->x -= token->tiles[0].x;
 	place->y -= token->tiles[0].y;
 	while (anchor.y < token->lines)
