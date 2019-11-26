@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:45:30 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/22 15:27:00 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/26 18:47:30 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	fetch_player(t_map *map)
 	char *str;
 
 	get_next_line(0, &str);
+	ft_log("in>>%s\n", str);
 	if (ft_strnequ(str, "$$$ exec", 8) && map->player == 0)
 	{
 		if (ft_strstr(str, "p1"))
@@ -33,21 +34,24 @@ void	feed_data(t_map *map, t_token *token)
 {
 	char *str;
 
-	while (get_next_line(0, &str) > 0)
-	{
+	if (get_next_line(0, &str) < 0)
+		filler_error("Read error!");
+	ft_log("in>>%s\n", str);
 	if (ft_strnequ(str, "Plateau", 7))
 	{	
 		fetch_mapsize(map, str);
+		ft_log("Map dimensions: %d %d\n", map->lines, map->columns);
 		fetch_map(map);
 	}
 	else if (ft_strnequ(str, "Piece", 5))
 	{
 		fetch_tokensize(token, str);
+		ft_log("Token dimensions: %d %d\n", token->lines, token->columns);
 		fetch_token(token);
+		print_map(map);
 		place_token(map, token);
 	}
 	free(str);
-	}
 }
 
 void	fetch_mapsize(t_map *map, char *str)
@@ -75,6 +79,7 @@ void	fetch_map(t_map *map)
 	while (i < map->lines)
 	{
 		get_next_line(0, &str);
+		ft_log("in>>%s\n", str);
 		map->map[i] = ft_strdup(&str[4]);
 		if ((int)ft_strlen(map->map[i]) != map->columns)
 			filler_error("Map line lenght error");
@@ -98,19 +103,47 @@ void	fetch_tokensize(t_token *token, char *str)
 
 void	fetch_token(t_token *token)
 {
-	int		i;
+	int		i, ret, j, size;
+	char	*buf;
+	char	*res;
+	char	*tmp;
 
 	i = 0;
 	token->map = (char **)malloc(sizeof(char *) * (token->lines + 1)); /*protect*/
 	token->map[token->lines] = NULL;
+	res = ft_strnew(1);
+	ret = 0;
+	// while (i < token->lines)
+	// {
+	// 	if (0 > get_next_line(0, &token->map[i]))
+	// 		return;
+	// 	ft_log("in>>%s\n", token->map[i]);
+	// 	if ((int)ft_strlen(token->map[i]) != token->columns)
+	// 		filler_error("Token line lenght error");
+	// 	i++;
+	// }
+	size = token->lines * (token->columns + 1);
+	buf = (char *)malloc(size);
+	while ((ret = read(0, buf, size)) > 0)
+	{
+		buf[ret] = '\0';
+		tmp = ft_strjoin(res, buf);
+		free(res);
+		res = ft_strdup(tmp);
+		free(tmp);
+		if ((int)ft_strlen(res) >= size - 1)
+			break;
+	}
+	ft_log("res: %s\n", res);
+	j = 0;
 	while (i < token->lines)
 	{
-		if (0 == get_next_line(0, &token->map[i]))
-			return;
-		if ((int)ft_strlen(token->map[i]) != token->columns)
-			filler_error("Token line lenght error");
+		token->map[i] = ft_strsub(res, j, token->columns);
+		ft_log("in>>%s\n", token->map[i]);
+		j += token->columns + 1;
 		i++;
 	}
+	transcribe_token(token);
 }
 
 void	transcribe_token(t_token *token)

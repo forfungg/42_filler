@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/22 16:19:57 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/26 17:40:08 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ void			filler_error(char *str);
 void			skip_line();
 void			anchor_token(t_token *token, int i);
 void			adjust_out(t_token *token, t_coords *place);
+void			ft_log(char *msg, ...);
 
 #endif

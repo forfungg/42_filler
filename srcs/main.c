@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:36:03 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/22 11:15:53 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/26 17:58:34 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ int		main()
 	t_token	token;
 	t_map	map;
 
+	ft_log("\n\n********START*******\n");
 	ft_bzero((void*)&token, sizeof(t_token));
 	ft_bzero((void*)&map, sizeof(t_map));
 	fetch_player(&map);
+	ft_log("Player symbol: %c\n", map.player);
 	while(1)
 	{
 		feed_data(&map, &token);
