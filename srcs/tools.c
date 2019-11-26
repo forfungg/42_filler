@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 18:25:47 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/26 18:06:38 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/26 20:30:02 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,22 @@ void	ft_log(char *msg, ...)
 	vfprintf(log_file, msg, args);
 	va_end(args);
 	fclose(log_file);
+}
+
+void	reset_game(t_map *map, t_token *token)
+{
+	int i;
+
+	i = 0;
+	ft_bzero((void*)token, sizeof(t_token)); /*free strings and shit*/
+	while (i < map->lines)
+	{
+		ft_strdel(&map->map[i]);
+		i++;
+	}
+	map->map = NULL;
+	map->lines = 0;
+	map->columns = 0;
+	map->my_area = 0;
+	map->enemy_area = 0;
 }

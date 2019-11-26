@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/26 17:40:08 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/26 20:30:22 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int				is_fit(t_map *map, t_token *token, int y, int x);
 void			print_map(t_map *map);
 void			place_token(t_map *map, t_token *token);
 void			filler_error(char *str);
+void			token_to_map(t_map *map, t_token *token, t_coords *here);
 
 /*
 ** Supportive tools
@@ -91,5 +92,6 @@ void			skip_line();
 void			anchor_token(t_token *token, int i);
 void			adjust_out(t_token *token, t_coords *place);
 void			ft_log(char *msg, ...);
+void			reset_game(t_map *map, t_token *token);
 
 #endif

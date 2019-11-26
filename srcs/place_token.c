@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 10:22:41 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/26 15:08:45 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/26 20:30:44 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ void	place_token(t_map *map, t_token *token)
 
 	find_place(map, token, &here);
 	adjust_out(token, &here);
+	ft_log("Placement @ %dx%d\n", here.y, here.x);
+	token_to_map(map, token, &here);
+	print_map(map);
 	ft_printf("%d %d", here.y, here.x);
-	ft_bzero((void*)token, sizeof(t_token));
-	ft_bzero((void*)map, sizeof(t_map));
-	map->map = NULL;
+	reset_game(map, token);
 	token->map = NULL;
 }
 

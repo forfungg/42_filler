@@ -6,11 +6,41 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:10:46 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/26 17:56:17 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/26 20:42:45 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
+
+void	token_to_map(t_map *map, t_token *token, t_coords *here)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (i < map->lines)
+	{
+		j = 0;
+		while (j < map->columns)
+		{
+			map->map[i][j] = ft_toupper(map->map[i][j]);
+			j++;
+		}
+		i++;
+	}
+	i = 0;
+	while (i < token->lines)
+	{
+		j = 0;
+		while (j < token->columns)
+		{
+			if (token->map[i][j] == '*')
+				map->map[here->y + i][here->x + j] = map->player + 32;
+			j++;
+		}
+		i++;
+	}
+}
 
 void	print_map(t_map *map)
 {

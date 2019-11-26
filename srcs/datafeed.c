@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:45:30 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/26 18:47:30 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/26 20:18:20 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	feed_data(t_map *map, t_token *token)
 		fetch_tokensize(token, str);
 		ft_log("Token dimensions: %d %d\n", token->lines, token->columns);
 		fetch_token(token);
-		print_map(map);
 		place_token(map, token);
 	}
 	free(str);
@@ -103,44 +102,21 @@ void	fetch_tokensize(t_token *token, char *str)
 
 void	fetch_token(t_token *token)
 {
-	int		i, ret, j, size;
-	char	*buf;
-	char	*res;
-	char	*tmp;
+	int		i;
+	char	*str;
 
 	i = 0;
 	token->map = (char **)malloc(sizeof(char *) * (token->lines + 1)); /*protect*/
 	token->map[token->lines] = NULL;
-	res = ft_strnew(1);
-	ret = 0;
-	// while (i < token->lines)
-	// {
-	// 	if (0 > get_next_line(0, &token->map[i]))
-	// 		return;
-	// 	ft_log("in>>%s\n", token->map[i]);
-	// 	if ((int)ft_strlen(token->map[i]) != token->columns)
-	// 		filler_error("Token line lenght error");
-	// 	i++;
-	// }
-	size = token->lines * (token->columns + 1);
-	buf = (char *)malloc(size);
-	while ((ret = read(0, buf, size)) > 0)
-	{
-		buf[ret] = '\0';
-		tmp = ft_strjoin(res, buf);
-		free(res);
-		res = ft_strdup(tmp);
-		free(tmp);
-		if ((int)ft_strlen(res) >= size - 1)
-			break;
-	}
-	ft_log("res: %s\n", res);
-	j = 0;
 	while (i < token->lines)
 	{
-		token->map[i] = ft_strsub(res, j, token->columns);
-		ft_log("in>>%s\n", token->map[i]);
-		j += token->columns + 1;
+		if (0 > get_next_line(0, &str))
+			return;
+		ft_log("in>>%s\n", str);
+		token->map[i] = ft_strdup(str);
+		free(str);
+		if ((int)ft_strlen(token->map[i]) != token->columns)
+			filler_error("Token line lenght error");
 		i++;
 	}
 	transcribe_token(token);
@@ -162,8 +138,10 @@ void	transcribe_token(t_token *token)
 		{
 			if (token->map[i][j] == '*')
 			{
-				TX(i) = j;
-				TY(i) = i;
+				token->tiles[t].x = j;
+				token->tiles[t].y = i;
+				ft_log("Tile[%d] @ %d x %d \n", t, token->tiles[t].y, token->tiles[t].x);
+				t++;
 			}
 			j++;
 		}
@@ -189,5 +167,6 @@ void	init_tiles(t_token *token)
 		}
 		i++;
 	}
+	ft_log("cnt_tiles=%d\n", token->cnt_tiles);
 	token->tiles = (t_coords *)malloc(sizeof(t_coords) * token->cnt_tiles);
 }
