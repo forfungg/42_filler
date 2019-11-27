@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 10:22:41 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/27 19:13:17 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/27 19:54:39 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	asses_position(t_map *map, t_token *token, t_coords *here)
 	}
 	dist = player_distance(map);
 	ft_log("dist = %d\n", dist);
-	if (token->best_dist == -1 || token->best_dist > dist)
+	if (token->best_dist == -1 || (token->best_dist > dist && here->y >= map->lines / 2) || (token->best_dist >= dist && here->y < map->lines / 2))
 	{
 		token->best_dist = dist;
 		token->best.x = here->x + token->tiles[0].x;

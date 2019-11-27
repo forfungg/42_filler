@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 18:25:47 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/27 19:13:36 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/27 20:02:54 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	skip_line(int fd)
 	char *str;
 
 	get_next_line(fd, &str);
-	free(str);
+	if (str)
+		free(str);
 }
 
 void	anchor_token(t_token *token, int i)
@@ -79,7 +80,8 @@ void	mapdel(t_map *map)
 	i = 0;
 	while (i < map->lines)
 	{
-		ft_strdel(&(map->map[i]));
+		if (map->map[i])
+			ft_strdel(&(map->map[i]));
 		i++;
 	}
 	map->map = NULL;
@@ -92,7 +94,8 @@ void	movedel(t_map *map)
 	i = 0;
 	while (i < map->lines)
 	{
-		ft_strdel(&(map->move[i]));
+		if (map->move[i])
+			ft_strdel(&(map->move[i]));
 		i++;
 	}
 	map->move = NULL;
@@ -105,12 +108,15 @@ void	tokendel(t_token *token)
 	i = 0;
 	while (i < token->lines)
 	{
-		ft_strdel(&(token->map[i]));
+		if (token->map[i])
+			ft_strdel(&(token->map[i]));
 		i++;
 	}
 	token->map = NULL;
 	token->lines = 0;
 	token->columns = 0;
 	token->columns = 0;
-	free(token->tiles);
+	if	(token->tiles)
+		free(token->tiles);
+	token->tiles = NULL;
 }

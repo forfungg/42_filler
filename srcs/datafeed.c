@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:45:30 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/27 18:36:30 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/27 20:13:48 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ void	fetch_player(t_map *map)
 		else
 			filler_error("Player order not found!");
 	}
-	free(str);
+	ft_log("Free @fetch_player\n");
+	if(str)
+		free(str);
 }
 
 void	feed_data(t_map *map, t_token *token)
@@ -56,7 +58,9 @@ void	feed_data(t_map *map, t_token *token)
 		fetch_token(token);
 		place_token(map, token);
 	}
-	free(str);
+	ft_log("Free @feed_data\n");
+	if(str)
+		free(str);
 }
 
 void	fetch_mapsize(t_map *map, char *str)
@@ -87,7 +91,9 @@ void	fetch_map(t_map *map)
 		map->map[i] = ft_strdup(&str[4]);
 		if ((int)ft_strlen(map->map[i]) != map->columns)
 			filler_error("Map line lenght error");
-		free(str);
+		ft_log("Free @fetch_map\n");
+		if(str)
+			free(str);
 		i++;
 	}
 }
@@ -115,10 +121,13 @@ void	fetch_token(t_token *token)
 	token->map[token->lines] = NULL;
 	while (i < token->lines)
 	{
-		if (0 > get_next_line(0, &str))
-			return;
+		get_next_line(0, &str);
+		// if (str == NULL || str[0] == '\0')
+		// 	continue;
 		token->map[i] = ft_strdup(str);
-		free(str);
+		ft_log("Free @fetch_token (%s)", str);
+		//free(str);
+		ft_log("-> DONE\n");
 		if ((int)ft_strlen(token->map[i]) != token->columns)
 			filler_error("Token line lenght error");
 		i++;
@@ -188,6 +197,8 @@ void	grabmap_file(t_map *map)
 	fetch_mapsize(map, str);
 	ft_log("Map dimensions: %d %d\n", map->lines, map->columns);
 	fetch_map(map);
-	free(str);
+	ft_log("Free @grabmap_file\n");
+	if(str)
+		free(str);
 	close(map->fd);
 }
