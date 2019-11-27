@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 10:22:41 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/26 20:30:44 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/27 11:02:56 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	place_token(t_map *map, t_token *token)
 	t_coords here;
 
 	find_place(map, token, &here);
+	ft_log("Pre-adjust coords: %dx%d\n", here.y, here.x);
 	adjust_out(token, &here);
 	ft_log("Placement @ %dx%d\n", here.y, here.x);
 	token_to_map(map, token, &here);

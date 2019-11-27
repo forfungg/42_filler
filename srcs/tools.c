@@ -6,17 +6,17 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 18:25:47 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/26 20:56:11 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/27 10:18:44 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void	skip_line()
+void	skip_line(int fd)
 {
 	char *str;
 
-	get_next_line(0, &str);
+	get_next_line(fd, &str);
 	ft_log("in>>%s\n", str);
 	free(str);
 }

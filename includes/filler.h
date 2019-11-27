@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/26 20:30:22 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/27 10:33:01 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct	s_map
 	int		my_area;
 	int		enemy_area;
 	char	player;
+	int		fd;
 }				t_map;
 
 
@@ -65,6 +66,7 @@ void			fetch_tokensize(t_token *token, char *str);
 void			fetch_token(t_token *token);
 void			transcribe_token(t_token *token);
 void			init_tiles(t_token *token);
+void			grabmap_file(t_map *map);
 
 /*
 ** Logic Functions
@@ -88,7 +90,7 @@ void			token_to_map(t_map *map, t_token *token, t_coords *here);
 ** Supportive tools
 */
 
-void			skip_line();
+void			skip_line(int fd);
 void			anchor_token(t_token *token, int i);
 void			adjust_out(t_token *token, t_coords *place);
 void			ft_log(char *msg, ...);

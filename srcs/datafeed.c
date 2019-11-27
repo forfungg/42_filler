@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:45:30 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/26 20:18:20 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/27 10:32:19 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	feed_data(t_map *map, t_token *token)
 {
 	char *str;
 
+	if (map->fd > 0 && map->map == NULL)
+		grabmap_file(map);
 	if (get_next_line(0, &str) < 0)
 		filler_error("Read error!");
 	ft_log("in>>%s\n", str);
@@ -71,13 +73,13 @@ void	fetch_map(t_map *map)
 	char	*str;
 	int		i;
 
-	skip_line();
+	skip_line(map->fd);
 	i = 0;
 	map->map = (char **)malloc(sizeof(char *) * (map->lines + 1)); /*protect*/
 	map->map[map->lines] = NULL;
 	while (i < map->lines)
 	{
-		get_next_line(0, &str);
+		get_next_line(map->fd, &str);
 		ft_log("in>>%s\n", str);
 		map->map[i] = ft_strdup(&str[4]);
 		if ((int)ft_strlen(map->map[i]) != map->columns)
@@ -169,4 +171,20 @@ void	init_tiles(t_token *token)
 	}
 	ft_log("cnt_tiles=%d\n", token->cnt_tiles);
 	token->tiles = (t_coords *)malloc(sizeof(t_coords) * token->cnt_tiles);
+}
+
+void	grabmap_file(t_map *map)
+{
+	char	*str;
+
+	ft_log("Fetching the map from a file\n");
+	map->fd = open("my_map", O_RDONLY);
+	if (map->fd == -1)
+		filler_error("Unable to open my_map");
+	get_next_line(map->fd, &str);
+	fetch_mapsize(map, str);
+	ft_log("Map dimensions: %d %d\n", map->lines, map->columns);
+	fetch_map(map);
+	free(str);
+	close(map->fd);
 }
