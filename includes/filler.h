@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/27 10:33:01 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/27 14:20:06 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define IS_STAR(x,y) (token->map[y][x] == '*')
 # define TX(i) (token->tiles[i].x)
 # define TY(i) (token->tiles[i].y)
+# define MAP_LOG 1
 
 typedef struct	s_coords
 {

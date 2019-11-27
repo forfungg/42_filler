@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:45:30 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/27 11:39:50 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/27 12:35:41 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	fetch_player(t_map *map)
 	char *str;
 
 	get_next_line(0, &str);
-	ft_log("in>>%s\n", str);
 	if (ft_strnequ(str, "$$$ exec", 8) && map->player == 0)
 	{
 		if (ft_strstr(str, "p1"))
@@ -38,7 +37,6 @@ void	feed_data(t_map *map, t_token *token)
 		grabmap_file(map);
 	if (get_next_line(0, &str) < 0)
 		filler_error("Read error!");
-	ft_log("in>>%s\n", str);
 	if (ft_strnequ(str, "Plateau", 7))
 	{	
 		fetch_mapsize(map, str);
@@ -80,7 +78,6 @@ void	fetch_map(t_map *map)
 	while (i < map->lines)
 	{
 		get_next_line(map->fd, &str);
-		ft_log("in>>%s\n", str);
 		map->map[i] = ft_strdup(&str[4]);
 		if ((int)ft_strlen(map->map[i]) != map->columns)
 			filler_error("Map line lenght error");
@@ -114,7 +111,6 @@ void	fetch_token(t_token *token)
 	{
 		if (0 > get_next_line(0, &str))
 			return;
-		ft_log("in>>%s\n", str);
 		token->map[i] = ft_strdup(str);
 		free(str);
 		if ((int)ft_strlen(token->map[i]) != token->columns)
@@ -142,7 +138,6 @@ void	transcribe_token(t_token *token)
 			{
 				token->tiles[t].x = j;
 				token->tiles[t].y = i;
-				ft_log("Tile[%d] @ %d x %d \n", t, token->tiles[t].y, token->tiles[t].x);
 				t++;
 			}
 			j++;
@@ -169,7 +164,6 @@ void	init_tiles(t_token *token)
 		}
 		i++;
 	}
-	ft_log("cnt_tiles=%d\n", token->cnt_tiles);
 	token->tiles = (t_coords *)malloc(sizeof(t_coords) * token->cnt_tiles);
 }
 

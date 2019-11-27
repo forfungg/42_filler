@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:36:03 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/27 10:30:27 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/27 14:18:53 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@ int		main(int ac, char **av)
 	t_map	map;
 	char	*str;
 
-	ft_log("\n\n********START*******\n");
+	ft_log("\n************START***********\n");
 	ft_bzero((void*)&token, sizeof(t_token));
 	ft_bzero((void*)&map, sizeof(t_map));
 	fetch_player(&map);
 	ft_log("Player symbol: %c\n", map.player);
+	ft_log("-------------------------------\n");
 	if (ac == 2)
 	{
 		map.fd = open(av[1], O_RDONLY);
@@ -42,8 +43,8 @@ int		main(int ac, char **av)
 
 /*
 	To-Do (Wed 27/11)
-	+ change placing algorithm (fucked up atm)
-	+ create test environment, copy-pasta is shit
+	+ fix mallocs
+	+ create "battlefield"
 
 	- evaluate strategy
 	- place token
