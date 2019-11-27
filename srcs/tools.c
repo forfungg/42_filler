@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 18:25:47 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/27 10:18:44 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/27 11:40:08 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	ft_log(char *msg, ...)
 	log_file = fopen("logs.txt", "a+");
 	va_start(args, msg);
 	vfprintf(log_file, msg, args);
+	fflush(log_file);
 	va_end(args);
 	fclose(log_file);
 }
