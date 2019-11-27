@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/27 14:20:06 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/27 19:11:58 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # define IS_DIGIT(x) (x >= '0' && x <= '9')
 # define IS_MINE(x) (x == map->player || x == map->player + 32)
+# define IS_ENEMY(x) (x == map->enemy || x == map->enemy + 32)
 # define IS_ANCHOR(i) (token->tiles[i].x == 0 && token->tiles[i].y == 0)
 # define IS_FREE(x,y) (map->map[y][x] == '.')
 # define IS_STAR(x,y) (token->map[y][x] == '*')
@@ -35,11 +36,13 @@ typedef struct	s_coords
 
 typedef struct	s_token
 {
-	int lines;
-	int columns;
-	char **map;
-	int	cnt_tiles;
-	t_coords *tiles;
+	int			lines;
+	int			columns;
+	char		**map;
+	int			cnt_tiles;
+	t_coords	*tiles;
+	t_coords	best;
+	int			best_dist;
 	
 }				t_token;
 
@@ -48,9 +51,11 @@ typedef struct	s_map
 	int		lines;
 	int		columns;
 	char	**map;
+	char	**move;
 	int		my_area;
 	int		enemy_area;
 	char	player;
+	char	enemy;
 	int		fd;
 }				t_map;
 
@@ -75,8 +80,14 @@ void			grabmap_file(t_map *map);
 
 void			place_token(t_map *map, t_token *token);
 void			find_place(t_map *map, t_token *token, t_coords *i);
-int				check_place(t_map *map, t_token *token, int y, int x);
-int				is_fit(t_map *map, t_token *token, int y, int x);
+int				check_place(t_map *map, t_token *token, t_coords *here);
+int				is_fit(t_map *map, t_token *token, t_coords *here);
+void			ft_middle(t_map *map, t_coords *center);
+int				ft_m_dist(const t_coords *a, const t_coords *b);
+void			find_mine(t_map *map, t_coords *mine);
+void			find_enemy(t_map *map, t_coords *enemy);
+int				player_distance(t_map *map);
+void			asses_position(t_map *map, t_token *token, t_coords *here);
 
 /*
 **	Print Functions
@@ -85,7 +96,7 @@ int				is_fit(t_map *map, t_token *token, int y, int x);
 void			print_map(t_map *map);
 void			place_token(t_map *map, t_token *token);
 void			filler_error(char *str);
-void			token_to_map(t_map *map, t_token *token, t_coords *here);
+void			token_to_map(t_map *map, t_token *token);
 
 /*
 ** Supportive tools
@@ -93,8 +104,11 @@ void			token_to_map(t_map *map, t_token *token, t_coords *here);
 
 void			skip_line(int fd);
 void			anchor_token(t_token *token, int i);
-void			adjust_out(t_token *token, t_coords *place);
+void			adjust_out(t_token *token);
 void			ft_log(char *msg, ...);
 void			reset_game(t_map *map, t_token *token);
-
+void			mapcpy(t_map *src);
+void			mapdel(t_map *map);
+void			movedel(t_map *map);
+void			tokendel(t_token *token);
 #endif

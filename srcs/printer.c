@@ -6,13 +6,13 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:10:46 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/27 11:05:54 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/27 18:09:08 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void	token_to_map(t_map *map, t_token *token, t_coords *here)
+void	token_to_map(t_map *map, t_token *token)
 {
 	int		i;
 	int		j;
@@ -35,7 +35,7 @@ void	token_to_map(t_map *map, t_token *token, t_coords *here)
 		while (j < token->columns)
 		{
 			if (token->map[i][j] == '*')
-				map->map[here->y + i][here->x + j] = map->player + 32;
+				map->map[token->best.y + i][token->best.x + j] = map->player + 32;
 			j++;
 		}
 		i++;
@@ -63,13 +63,11 @@ void	print_map(t_map *map)
 	fclose(map_file);
 }
 
-void	adjust_out(t_token *token, t_coords *place)
+void	adjust_out(t_token *token)
 {
 	t_coords anchor;
 
 	anchor.y = 0;
-	place->x += token->tiles[0].x;
-	place->y += token->tiles[0].y;
 	anchor_token(token, 0);
 	while (anchor.y < token->lines)
 	{
@@ -78,8 +76,8 @@ void	adjust_out(t_token *token, t_coords *place)
 		{
 			if (IS_STAR(anchor.x, anchor.y))
 			{
-				place->x -= anchor.x;
-				place->y -= anchor.y;
+				token->best.x -= anchor.x;
+				token->best.y -= anchor.y;
 				return ;
 			}
 			anchor.x++;

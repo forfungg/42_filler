@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:45:30 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/27 12:35:41 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/27 18:36:30 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,15 @@ void	fetch_player(t_map *map)
 	if (ft_strnequ(str, "$$$ exec", 8) && map->player == 0)
 	{
 		if (ft_strstr(str, "p1"))
+		{
 			map->player = 'O';
+			map->enemy = 'X';
+		}
 		else if (ft_strstr(str, "p2"))
+		{
 			map->player = 'X';
+			map->enemy = 'O';
+		}
 		else
 			filler_error("Player order not found!");
 	}
@@ -145,6 +151,9 @@ void	transcribe_token(t_token *token)
 		i++;
 	}
 	anchor_token(token, 0);
+	token->best.x = -1;
+	token->best.y = -1;
+	token->best_dist = -1;
 }
 
 void	init_tiles(t_token *token)
