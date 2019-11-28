@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 10:22:41 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/27 19:54:39 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/28 19:03:07 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,28 +81,31 @@ int		is_fit(t_map *map, t_token *token, t_coords *here)
 
 void	asses_position(t_map *map, t_token *token, t_coords *here)
 {
-	int i, a, b;
+	// int i, a, b;
 	int	dist;
 
-	ft_log("Assess @%dx%d\n", here->y, here->x);
-	mapcpy(map);
-	i = 0;
-	while(i < token->cnt_tiles)
-	{
-		a = token->tiles[i].y + here->y;
-		b = token->tiles[i].x + here->x;
-		map->move[a][b] = map->player;
-		i++;
-	}
-	dist = player_distance(map);
-	ft_log("dist = %d\n", dist);
-	if (token->best_dist == -1 || (token->best_dist > dist && here->y >= map->lines / 2) || (token->best_dist >= dist && here->y < map->lines / 2))
+	// ft_log("Assess @%dx%d\n", here->y, here->x);
+	// mapcpy(map);
+	// i = 0;
+	// while(i < token->cnt_tiles)
+	// {
+	// 	a = token->tiles[i].y + here->y;
+	// 	b = token->tiles[i].x + here->x;
+	// 	map->move[a][b] = map->player;
+	// 	i++;
+	// }
+	dist = 1; //player_distance(map);
+	// ft_log("dist = %d |", dist);
+	dist *= move_score(map, token, here);
+	ft_log("total = %d \n", dist);
+	//if (token->best_dist == -1 || (token->best_dist > dist && here->y >= map->lines / 2) || (token->best_dist >= dist && here->y < map->lines / 2))
+	if (dist > token->best_dist)
 	{
 		token->best_dist = dist;
 		token->best.x = here->x + token->tiles[0].x;
 		token->best.y = here->y + token->tiles[0].y;
 	}
-	movedel(map);
+	// movedel(map);
 }
 // Future "breaking the big map into smaller sections of interest"
 // void	battlefiled(t_map *map, t_coords *start, t_coords *end)

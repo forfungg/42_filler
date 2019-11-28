@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/27 19:51:00 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/28 19:33:49 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ typedef struct	s_coords
 	int	x;
 	int	y;
 }				t_coords;
+
+typedef struct	s_scoretab
+{
+	t_coords	anchor;
+	int			lines;
+	int			columns;
+	int			score;
+}				t_scoretab;
 
 
 typedef struct	s_token
@@ -88,6 +96,14 @@ void			find_mine(t_map *map, t_coords *mine);
 void			find_enemy(t_map *map, t_coords *enemy);
 int				player_distance(t_map *map);
 void			asses_position(t_map *map, t_token *token, t_coords *here);
+
+/*
+** Scoring Functions
+*/
+
+int				move_score(t_map *map, t_token *token, t_coords *here);
+int				tile_score(t_map *map, t_coords *t, t_coords *start);
+int				distance_score(t_map *map, t_coords *t, t_coords *start);
 
 /*
 **	Print Functions

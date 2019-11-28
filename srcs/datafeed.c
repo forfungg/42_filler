@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:45:30 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/27 20:13:48 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/28 19:13:00 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	fetch_map(t_map *map)
 		map->map[i] = ft_strdup(&str[4]);
 		if ((int)ft_strlen(map->map[i]) != map->columns)
 			filler_error("Map line lenght error");
-		ft_log("Free @fetch_map\n");
+		// ft_log("Free @fetch_map\n");
 		if(str)
 			free(str);
 		i++;
@@ -125,13 +125,14 @@ void	fetch_token(t_token *token)
 		// if (str == NULL || str[0] == '\0')
 		// 	continue;
 		token->map[i] = ft_strdup(str);
-		ft_log("Free @fetch_token (%s)", str);
+		ft_log("%s\n", str);
 		//free(str);
-		ft_log("-> DONE\n");
+		// ft_log("-> DONE\n");
 		if ((int)ft_strlen(token->map[i]) != token->columns)
 			filler_error("Token line lenght error");
 		i++;
 	}
+	ft_log("\n");
 	transcribe_token(token);
 }
 
