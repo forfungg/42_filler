@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 09:31:19 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/30 11:51:13 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/30 19:37:34 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,22 @@ void	main_vector(t_map *map)
 	t_coords mine;
 	t_coords enemy;
 	
+	ft_log("main_vector: ");
 	find_mine(map, &mine);
+	ft_log("1 | ");
 	map->right.edge = mine;
 	map->left.edge = mine;
+	ft_log("2 | ");
 	find_enemy(map, &enemy);
+	ft_log("3 | ");
 	map->right.crit_max = enemy;
 	map->right.crit_min = enemy;
 	map->left.crit_max = enemy;
 	map->left.crit_min = enemy;
 	map->main_v.start = mine;
+	ft_log("4 | ");
 	map->main_v.direction = get_direction(&mine, &enemy);
+	ft_log("5\n");
 }
 
 t_coords	get_direction(t_coords *start, t_coords *point)
@@ -38,7 +44,7 @@ t_coords	get_direction(t_coords *start, t_coords *point)
 	return(direction);
 }
 
-int		get_deltas(t_token *token)
+void		get_deltas(t_token *token)
 {
 	int i;
 	int j;

@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/30 19:10:50 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/30 19:34:09 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define TX(i) (token->tiles[i].x)
 # define TY(i) (token->tiles[i].y)
 # define IS_ZERO_P(a) (a->x == 0 && a->y == 0)
+# define IS_ZERO_V(a) (a.start.x == 0 && a.start.y == 0 && a.direction.x == 0 && a.direction.y == 0)
 # define MAP_LOG 1
 
 typedef struct	s_coords
@@ -115,6 +116,12 @@ int				player_distance(t_map *map);
 void			asses_position(t_map *map, t_token *token, t_coords *here);
 
 /*
+**	Vectors
+*/
+
+t_coords		get_direction(t_coords *start, t_coords *point);
+void			main_vector(t_map *map);
+/*
 ** Parsing functions
 */
 
@@ -152,5 +159,5 @@ void			mapcpy(t_map *src);
 void			mapdel(t_map *map);
 void			movedel(t_map *map);
 void			tokendel(t_token *token);
-int				get_deltas(t_token *token);
+void			get_deltas(t_token *token);
 #endif

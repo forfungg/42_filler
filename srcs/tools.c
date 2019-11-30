@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 18:25:47 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/30 09:31:01 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/30 19:25:45 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ void	reset_game(t_map *map, t_token *token)
 	mapdel(map);
 	map->lines = 0;
 	map->columns = 0;
-	map->my_area = 0;
-	map->enemy_area = 0;
 }
 
 void	mapcpy(t_map *map)
