@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/28 19:33:49 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/30 19:10:50 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define IS_STAR(x,y) (token->map[y][x] == '*')
 # define TX(i) (token->tiles[i].x)
 # define TY(i) (token->tiles[i].y)
+# define IS_ZERO_P(a) (a->x == 0 && a->y == 0)
 # define MAP_LOG 1
 
 typedef struct	s_coords
@@ -32,6 +33,19 @@ typedef struct	s_coords
 	int	x;
 	int	y;
 }				t_coords;
+
+typedef struct	s_vector
+{
+	t_coords	start;
+	t_coords	direction;
+}				t_vector;
+
+typedef struct	s_strat_branch
+{
+	t_coords	edge;
+	t_coords	crit_max;
+	t_coords	crit_min;
+}				t_branch;
 
 typedef struct	s_scoretab
 {
@@ -51,20 +65,23 @@ typedef struct	s_token
 	t_coords	*tiles;
 	t_coords	best;
 	int			best_dist;
+	int			h_delta;
+	int			v_delta;
 	
 }				t_token;
 
 typedef struct	s_map
 {
-	int		lines;
-	int		columns;
-	char	**map;
-	char	**move;
-	int		my_area;
-	int		enemy_area;
-	char	player;
-	char	enemy;
-	int		fd;
+	int			lines;
+	int			columns;
+	char		**map;
+	char		**move;
+	char		player;
+	char		enemy;
+	int			fd;
+	t_vector	main_v;
+	t_branch	right;
+	t_branch	left;
 }				t_map;
 
 
@@ -98,6 +115,14 @@ int				player_distance(t_map *map);
 void			asses_position(t_map *map, t_token *token, t_coords *here);
 
 /*
+** Parsing functions
+*/
+
+t_coords		left_top(t_map *map, t_token *token);
+t_coords		right_bottom(t_map *map, t_token *token);
+void			resize_square(t_map *map, t_coords *l_top, t_coords *r_bot);
+
+/*
 ** Scoring Functions
 */
 
@@ -127,4 +152,5 @@ void			mapcpy(t_map *src);
 void			mapdel(t_map *map);
 void			movedel(t_map *map);
 void			tokendel(t_token *token);
+int				get_deltas(t_token *token);
 #endif

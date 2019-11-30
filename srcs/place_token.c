@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 10:22:41 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/28 19:03:07 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/30 19:23:51 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,32 @@ void	place_token(t_map *map, t_token *token)
 
 void	find_place(t_map *map, t_token *token, t_coords *i)
 {
+	t_coords l_top;
+	t_coords r_bot;
 
-	i->y = 0;
-	while (i->y < map->lines)
+	l_top = left_top(map, token);
+	r_bot = right_bottom(map, token);
+	while (!(l_top.x == 0 && l_top.y == 0 && r_bot.y == map->lines && r_bot.x == map->columns))
 	{
-		i->x = 0;
-		while (i->x < map->columns)
+		ft_log("Searching in area %dx%d from [%d, %d]\n", r_bot.y - l_top.y, r_bot.x - l_top.x, l_top.y, l_top.x);
+		i->y = l_top.y;
+		while (i->y < r_bot.y)
 		{
-			if (IS_MINE(map->map[i->y][i->x]))
-				check_place(map, token, i);
-			i->x++;
+			i->x = l_top.x;
+			while (i->x < r_bot.x)
+			{
+				if (IS_MINE(map->map[i->y][i->x]))
+					check_place(map, token, i);
+				i->x++;
+			}
+			i->y++;
 		}
-		i->y++;
+		if (token->best.x < 0 || token->best.y < 0)
+			resize_square(map, &l_top, &r_bot);
+		else
+			return ;
 	}
-	if (token->best.x < 0 || token->best.y < 0)
-		filler_error("GAME OVER!");
+	filler_error("GAME OVER!");
 }
 
 int		check_place(t_map *map, t_token *token, t_coords *here)

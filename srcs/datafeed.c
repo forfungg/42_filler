@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:45:30 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/28 19:13:00 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/11/30 19:04:51 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	fetch_player(t_map *map)
 		else
 			filler_error("Player order not found!");
 	}
-	ft_log("Free @fetch_player\n");
 	if(str)
 		free(str);
 }
@@ -161,6 +160,7 @@ void	transcribe_token(t_token *token)
 		i++;
 	}
 	anchor_token(token, 0);
+	get_deltas(token);
 	token->best.x = -1;
 	token->best.y = -1;
 	token->best_dist = -1;
