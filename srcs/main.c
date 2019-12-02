@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:36:03 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/27 14:18:53 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/02 10:59:10 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ int		main(int ac, char **av)
 	To-Do (Wed 27/11)
 	+ fix mallocs
 	+ create "battlefield"
+
+	To-Do
+	+ change my sqrt ft to float?
 
 	- evaluate strategy
 	- place token

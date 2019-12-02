@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 18:25:47 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/30 19:25:45 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/02 11:39:44 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,13 @@ void	tokendel(t_token *token)
 	if	(token->tiles)
 		free(token->tiles);
 	token->tiles = NULL;
+}
+
+void	ft_log_status(t_map *map, t_token *token)
+{
+	ft_log("Pre-Placement Status\n");
+	ft_log(">>main_v [%d; %d]->[%d; %d]\n", map->main_v.start.y, map->main_v.start.x, map->main_v.direction.y, map->main_v.direction.x);
+	ft_log(">>left branch:\tedge[%d, %d]\n\t\t\t\tcrit_max[%d, %d]\n\t\t\t\tcrit_min[%d, %d]\n", map->left.edge.y, map->left.edge.x, map->left.crit_max.y, map->left.crit_max.x, map->left.crit_min.y, map->left.crit_min.x);
+	ft_log(">>right branch:\tedge[%d, %d]\n\t\t\t\tcrit_max[%d, %d]\n\t\t\t\tcrit_min[%d, %d]\n", map->right.edge.y, map->right.edge.x, map->right.crit_max.y, map->right.crit_max.x, map->right.crit_min.y, map->right.crit_min.x);
+	ft_log(">>Token h_delta = %d | v_delta = %d\n", token->h_delta, token->v_delta);
 }

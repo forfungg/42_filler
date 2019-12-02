@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/30 19:34:09 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/02 13:04:41 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ void			find_place(t_map *map, t_token *token, t_coords *i);
 int				check_place(t_map *map, t_token *token, t_coords *here);
 int				is_fit(t_map *map, t_token *token, t_coords *here);
 void			ft_middle(t_map *map, t_coords *center);
-int				ft_m_dist(const t_coords *a, const t_coords *b);
 void			find_mine(t_map *map, t_coords *mine);
 void			find_enemy(t_map *map, t_coords *enemy);
 int				player_distance(t_map *map);
@@ -130,12 +129,13 @@ t_coords		right_bottom(t_map *map, t_token *token);
 void			resize_square(t_map *map, t_coords *l_top, t_coords *r_bot);
 
 /*
-** Scoring Functions
+** Scoring & Strategy Functions
 */
 
 int				move_score(t_map *map, t_token *token, t_coords *here);
-int				tile_score(t_map *map, t_coords *t, t_coords *start);
-int				distance_score(t_map *map, t_coords *t, t_coords *start);
+int				tile_score(t_map *map, t_coords *t);
+int				distance_score(t_map *map, t_coords *t);
+void			adjust_edge(t_map *map, t_token *token, t_coords *p);
 
 /*
 **	Print Functions
@@ -147,6 +147,14 @@ void			filler_error(char *str);
 void			token_to_map(t_map *map, t_token *token);
 
 /*
+** Calculus
+*/
+
+long double		dist_direct(t_map *map, t_coords *p);
+long double		ft_sqrt_prec(long double nb, int prec);
+long double		ft_m_dist(const t_coords *a, const t_coords *b);
+
+/*
 ** Supportive tools
 */
 
@@ -154,6 +162,7 @@ void			skip_line(int fd);
 void			anchor_token(t_token *token, int i);
 void			adjust_out(t_token *token);
 void			ft_log(char *msg, ...);
+void			ft_log_status(t_map *map, t_token *token);
 void			reset_game(t_map *map, t_token *token);
 void			mapcpy(t_map *src);
 void			mapdel(t_map *map);

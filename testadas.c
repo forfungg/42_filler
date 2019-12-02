@@ -1,22 +1,20 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-typedef struct	s_coords
+long double	ft_sqrt_prec(long double nb, int prec);
+
+int main (int ac, char **av)
 {
-	int	x;
-	int	y;
-}				t_coords;
+	long double nb;
+	int p;
+	long double res;
 
-int main()
-{
-	t_coords p1;
-	t_coords p2;
-	t_coords p3;
-
-	p1.x = 10;
-	p1.y = 20;
-	p2.x = 7;
-	p2.y = 17;
-	p3 = p1 - 3;
-	printf("%d %d", p2.x, p2.y);
+	if (ac == 3)
+	{
+		nb = (long double)atoi(av[1]);
+		p = atoi(av[2]);
+		res = ft_sqrt_prec(nb, p);
+		printf("sqrt of %.3Lf with prec(%d) is %.*Lf\n", nb, p, p, res);
+	}
 	return 0;
 }

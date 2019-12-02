@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 15:18:31 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/30 19:10:59 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/02 10:06:16 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void		resize_square(t_map *map, t_coords *l_top, t_coords *r_bot)
 	l_top->y = l_top->y > 0 ? l_top->y - 1: 0;
 	r_bot->x = r_bot->x < map->columns - 1 ? r_bot->x + 1: map->columns - 1;
 	r_bot->y = r_bot->y < map->lines - 1 ? r_bot->y + 1: map->lines - 1;
+	ft_log("Map of interest resized (%d x %d)\n", r_bot->y - l_top->y, r_bot->x - l_top->x);
 }
 
 /*

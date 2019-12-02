@@ -6,7 +6,7 @@
 #    By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 18:30:20 by jnovotny          #+#    #+#              #
-#    Updated: 2019/11/30 19:34:34 by jnovotny         ###   ########.fr        #
+#    Updated: 2019/12/02 13:00:28 by jnovotny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,9 @@ FTS =	main.c \
 		place_token.c \
 		scoring.c \
 		vectors.c \
-		map_parse.c
+		map_parse.c \
+		calculus_tools.c \
+		ft_sqrt_prec.c 
 
 FTO = $(FTS.c=.o)
 

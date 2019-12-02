@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 10:22:41 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/30 19:42:35 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/02 17:35:58 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@ void	place_token(t_map *map, t_token *token)
 
 	if (IS_ZERO_V(map->main_v))
 		main_vector(map);
+	ft_log_status(map, token);
 	find_place(map, token, &here);
+	// update my strat values;
+	here = token->best;
+	adjust_edge(map, token, &here);
 	ft_log("Pre-adjust coords: %dx%d\n", token->best.y, token->best.x);
 	adjust_out(token);
 	ft_log("Placement @ %dx%d\n", token->best.y, token->best.x);
@@ -199,9 +203,7 @@ void	find_mine(t_map *map, t_coords *mine)
 	t_coords center;
 
 	ft_bzero(mine, sizeof(t_coords));
-	ft_log("find_mine: ");
 	ft_middle(map, &center);
-	ft_log("1 | ");
 	current.y = 0;
 	while (current.y < map->lines)
 	{
@@ -214,26 +216,8 @@ void	find_mine(t_map *map, t_coords *mine)
 				mine->y = current.y;
 			}
 			current.x++;
-			ft_log("x = %d | ", current.x);
 		}
 		current.y++;
-		ft_log("y = %d | ", current.y);
 	}
-	ft_log("Done \n");
 }
 
-int		ft_m_dist(const t_coords *a, const t_coords *b)
-{
-	int i;
-	int k;
-	ft_log("OK | ");
-	i = a->x - b->x;
-	k = a->y - b->y;
-	return (ft_min_sqrt(i * i + k * k));
-}
-
-void	ft_middle(t_map *map, t_coords *center)
-{
-	center->x = map->columns / 2;
-	center->y = map->lines / 2;
-}

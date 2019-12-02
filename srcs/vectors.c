@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 09:31:19 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/30 19:37:34 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/02 17:08:00 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,19 @@ void	main_vector(t_map *map)
 	t_coords mine;
 	t_coords enemy;
 	
-	ft_log("main_vector: ");
 	find_mine(map, &mine);
-	ft_log("1 | ");
 	map->right.edge = mine;
 	map->left.edge = mine;
-	ft_log("2 | ");
 	find_enemy(map, &enemy);
-	ft_log("3 | ");
 	map->right.crit_max = enemy;
 	map->right.crit_min = enemy;
 	map->left.crit_max = enemy;
 	map->left.crit_min = enemy;
 	map->main_v.start = mine;
-	ft_log("4 | ");
 	map->main_v.direction = get_direction(&mine, &enemy);
-	ft_log("5\n");
+	// If looking for parallel vector through point A then the point B on such vector can be found by:
+	// B.x = A.x - main_v.direction.x;
+	// B.y = A.y - main_v.direction.y; 
 }
 
 t_coords	get_direction(t_coords *start, t_coords *point)
@@ -57,10 +54,10 @@ void		get_deltas(t_token *token)
 		j = i + 1;
 		while (j < token->cnt_tiles)
 		{
-			if (token->tiles[i].x - token->tiles[j].x > token->h_delta)
-				token->h_delta = token->tiles[i].x - token->tiles[j].x;
-			if (token->tiles[i].y - token->tiles[j].y > token->v_delta)
-				token->v_delta = token->tiles[i].y - token->tiles[j].y;
+			if (token->tiles[j].x - token->tiles[i].x > token->h_delta)
+				token->h_delta = token->tiles[j].x - token->tiles[i].x;
+			if (token->tiles[j].y - token->tiles[i].y > token->v_delta)
+				token->v_delta = token->tiles[j].y - token->tiles[i].y;
 			j++;
 		}
 		i++;
