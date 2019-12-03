@@ -6,17 +6,24 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 09:31:19 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/02 17:08:00 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/03 17:19:09 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void	main_vector(t_map *map)
+/*
+** If looking for parallel vector through point A then the point B
+** on such vector can be found by:
+** B.x = A.x - main_v.direction.x;
+** B.y = A.y - main_v.direction.y;
+*/
+
+void		main_vector(t_map *map)
 {
 	t_coords mine;
 	t_coords enemy;
-	
+
 	find_mine(map, &mine);
 	map->right.edge = mine;
 	map->left.edge = mine;
@@ -27,9 +34,6 @@ void	main_vector(t_map *map)
 	map->left.crit_min = enemy;
 	map->main_v.start = mine;
 	map->main_v.direction = get_direction(&mine, &enemy);
-	// If looking for parallel vector through point A then the point B on such vector can be found by:
-	// B.x = A.x - main_v.direction.x;
-	// B.y = A.y - main_v.direction.y; 
 }
 
 t_coords	get_direction(t_coords *start, t_coords *point)
@@ -38,14 +42,14 @@ t_coords	get_direction(t_coords *start, t_coords *point)
 
 	direction.x = start->x - point->x;
 	direction.y = start->y - point->y;
-	return(direction);
+	return (direction);
 }
 
 void		get_deltas(t_token *token)
 {
 	int i;
 	int j;
-	
+
 	token->v_delta = 0;
 	token->h_delta = 0;
 	i = 0;

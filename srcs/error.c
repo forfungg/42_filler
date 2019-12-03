@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:58:40 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/27 20:03:09 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/03 17:16:16 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,5 @@ void	filler_error(char *str)
 {
 	ft_printf("{RED}%s{EOC}\n", str);
 	ft_log("Exit: %s\n", str);
-	exit (-1);
+	exit(-1);
 }
