@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 15:18:31 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/02 10:06:16 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/03 16:17:10 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,37 @@ t_coords	right_bottom(t_map *map, t_token *token)
 
 void		resize_square(t_map *map, t_coords *l_top, t_coords *r_bot)
 {
+	if (l_top->x == 0 && l_top->y == 0 && r_bot->x == map->columns - 1 && r_bot->y == map->lines - 1)
+		filler_error("GAME OVER!");
 	l_top->x = l_top->x > 0 ? l_top->x - 1: 0;
 	l_top->y = l_top->y > 0 ? l_top->y - 1: 0;
 	r_bot->x = r_bot->x < map->columns - 1 ? r_bot->x + 1: map->columns - 1;
 	r_bot->y = r_bot->y < map->lines - 1 ? r_bot->y + 1: map->lines - 1;
 	ft_log("Map of interest resized (%d x %d)\n", r_bot->y - l_top->y, r_bot->x - l_top->x);
 }
+
+// void	set_crits(t_map *map)
+// {
+// 	int qd;
+// 	t_coords i;
+	
+// 	qd = (map->main_v.direction.x > 0 && map->main_v.direction.y > 0) || (map->main_v.direction.x < 0 && map->main_v.direction.y < 0) ? 1 : -1;
+// 	i.y = 0;
+// 	while (i.y < map->lines)
+// 	{
+// 		i.x = 0;
+// 		while (i.x < map->columns)
+// 		{
+// 			if (IS_ENEMY(map->map[i.y][i.x]) && qd == 1)
+// 			{
+// 				if (map->left.edge.y - map->left.crit_max.y > map->left.edge.y - i.y && map->left.edge.x - map->left.crit_max.x > map->left.edge.x - i.x)
+// 					map->left.crit_max = i;
+// 				else if
+// 			} 
+// 		}
+
+// 	}
+// }
 
 /*
 ** Chop Start -> find first players' tile and last players' tile chop the size to include those points

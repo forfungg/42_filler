@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 10:22:41 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/02 17:35:58 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/03 16:17:03 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	place_token(t_map *map, t_token *token)
 
 	if (IS_ZERO_V(map->main_v))
 		main_vector(map);
+	// set_crits(map);
 	ft_log_status(map, token);
 	find_place(map, token, &here);
 	// update my strat values;
@@ -44,7 +45,7 @@ void	find_place(t_map *map, t_token *token, t_coords *i)
 	r_bot = right_bottom(map, token);
 	while (!(l_top.x == 0 && l_top.y == 0 && r_bot.y == map->lines && r_bot.x == map->columns))
 	{
-		ft_log("Searching in area %dx%d from [%d, %d]\n", r_bot.y - l_top.y, r_bot.x - l_top.x, l_top.y, l_top.x);
+		ft_log("\nSearching in area %dx%d from [%d, %d]\n", r_bot.y - l_top.y, r_bot.x - l_top.x, l_top.y, l_top.x);
 		i->y = l_top.y;
 		while (i->y < r_bot.y)
 		{
@@ -62,7 +63,6 @@ void	find_place(t_map *map, t_token *token, t_coords *i)
 		else
 			return ;
 	}
-	filler_error("GAME OVER!");
 }
 
 int		check_place(t_map *map, t_token *token, t_coords *here)
@@ -70,11 +70,15 @@ int		check_place(t_map *map, t_token *token, t_coords *here)
 	int		i;
 	
 	i = 0;
+	
 	while (i < token->cnt_tiles)
 	{
 		anchor_token(token, i);
 		if (is_fit(map, token, here))
+		{
+			ft_log("Tile[%d][%d] @t%.2d: ", here->y, here->x, i);
 			asses_position(map, token, here);
+		}
 		i++;
 	}
 	return (1);
@@ -87,7 +91,7 @@ int		is_fit(t_map *map, t_token *token, t_coords *here)
 	i = 0;
 	while (i < token->cnt_tiles)
 	{
-		if (TX(i) + here->x >= map->columns || TY(i) + here->y >= map->lines)
+		if (TX(i) + here->x >= map->columns || TY(i) + here->y >= map->lines || TX(i) + here->x < 0 || TY(i) + here->y < 0)
 			return (0);
 		if (!IS_ANCHOR(i) && !IS_FREE(TX(i) + here->x, TY(i) + here->y))
 			return (0);
@@ -114,7 +118,7 @@ void	asses_position(t_map *map, t_token *token, t_coords *here)
 	dist = 1; //player_distance(map);
 	// ft_log("dist = %d |", dist);
 	dist *= move_score(map, token, here);
-	ft_log("total = %d \n", dist);
+	ft_log("%d\n", dist);
 	//if (token->best_dist == -1 || (token->best_dist > dist && here->y >= map->lines / 2) || (token->best_dist >= dist && here->y < map->lines / 2))
 	if (dist > token->best_dist)
 	{
