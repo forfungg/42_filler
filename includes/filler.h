@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/02 13:04:41 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/07 17:29:50 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "get_next_line.h"
+# include "mlx.h"
 
 # define IS_DIGIT(x) (x >= '0' && x <= '9')
 # define IS_MINE(x) (x == map->player || x == map->player + 32)
@@ -28,6 +29,12 @@
 # define IS_ZERO_P(a) (a->x == 0 && a->y == 0)
 # define IS_ZERO_V(a) (a.start.x == 0 && a.start.y == 0 && a.direction.x == 0 && a.direction.y == 0)
 # define MAP_LOG 1
+# define MLX_RED 16711680
+# define MLX_ORANGE 16733440
+# define MLX_WHITE 16777215
+# define MLX_BLUE 255
+# define MLX_GREEN 65280
+# define MLX_L_GREEN 11992832
 
 typedef struct	s_coords
 {
@@ -56,6 +63,36 @@ typedef struct	s_scoretab
 	int			score;
 }				t_scoretab;
 
+typedef struct	s_board_img
+{
+	int		width;
+	int		height;
+	int		color;
+	void	*img;
+	char	*img_p;
+	int		bpp;
+	int		line_s;
+	int		endian;
+}				t_bimg;
+
+typedef	struct	s_board
+{
+	void	*mlx_p;
+	void	*win;
+	int		lines;
+	int		columns;
+	t_bimg	header;
+	t_bimg	bg;
+	t_bimg	game_board;
+	int		brdoff_l;
+	int		brdoff_t;
+	t_bimg	empty;
+	t_bimg	p1_old;
+	t_bimg	p1_new;
+	t_bimg	p2_old;
+	t_bimg	p2_new;
+}				t_brd;
+
 
 typedef struct	s_token
 {
@@ -76,6 +113,7 @@ typedef struct	s_map
 	int			lines;
 	int			columns;
 	char		**map;
+	t_brd		board;
 	char		**move;
 	char		player;
 	char		enemy;
@@ -91,7 +129,7 @@ typedef struct	s_map
 */
 
 void			fetch_player(t_map *map);
-void			feed_data(t_map *map, t_token *token);
+void			feed_data(t_map *map, t_token *token, t_brd *board);
 void			fetch_mapsize(t_map *map, char *str);
 void			fetch_map(t_map *map);
 void			fetch_tokensize(t_token *token, char *str);
@@ -153,6 +191,20 @@ void			token_to_map(t_map *map, t_token *token);
 long double		dist_direct(t_map *map, t_coords *p);
 long double		ft_sqrt_prec(long double nb, int prec);
 long double		ft_m_dist(const t_coords *a, const t_coords *b);
+
+/*
+** Visual
+*/
+
+void			map_to_visual(t_map *map,t_brd *board);
+void			init_board(t_map *map,t_brd *board);
+void			init_header(t_brd *board);
+void			init_bg(t_brd *board);
+void			init_players(t_brd *board);
+void			p_tile_size(t_brd *board, int size);
+void			init_game_board(t_brd *board);
+void			square_img(void *mlx_ptr, t_bimg *elem);
+char			*brd_s_str(int width, int height);
 
 /*
 ** Supportive tools

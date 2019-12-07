@@ -6,7 +6,7 @@
 #    By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 18:30:20 by jnovotny          #+#    #+#              #
-#    Updated: 2019/12/02 13:00:28 by jnovotny         ###   ########.fr        #
+#    Updated: 2019/12/07 17:32:51 by jnovotny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,9 @@ FTS =	main.c \
 		vectors.c \
 		map_parse.c \
 		calculus_tools.c \
-		ft_sqrt_prec.c 
+		ft_sqrt_prec.c \
+		visualizator.c \
+		logger.c
 
 FTO = $(FTS.c=.o)
 
@@ -46,6 +48,8 @@ SRCS = $(addprefix $(S_DIR), $(FTS))
 
 CFLAGS = -Wall -Werror -Wextra
 
+GRAPHIC = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
+
 .PHONY: all clean fclean re libft
 
 all: $(NAME)
@@ -55,7 +59,7 @@ libft:
 
 $(NAME):
 	@/bin/mkdir -p $(O_DIR)
-	@gcc -o $(NAME) $(CFLAGS) -I$(I_DIR) -I$(LIB_I) $(LIB) $(SRCS)
+	@gcc -o $(NAME) $(CFLAGS) -I$(I_DIR) -I$(LIB_I) $(LIB) $(GRAPHIC) $(SRCS)
 	@echo "$(C_GREEN)[$(C_BLUE)$(NAME)$(C_GREEN) was compiled]$(C_RES)"
 
 clean:

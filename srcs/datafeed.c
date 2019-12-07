@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:45:30 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/30 19:04:51 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/07 19:21:18 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	fetch_player(t_map *map)
 		free(str);
 }
 
-void	feed_data(t_map *map, t_token *token)
+void	feed_data(t_map *map, t_token *token, t_brd *board)
 {
 	char *str;
 
@@ -48,7 +48,10 @@ void	feed_data(t_map *map, t_token *token)
 	{	
 		fetch_mapsize(map, str);
 		ft_log("Map dimensions: %d %d\n", map->lines, map->columns);
+		if (board->lines != map->lines || board->columns != map->columns)
+			init_board(map, board);
 		fetch_map(map);
+		// map_to_visual(map, board);
 	}
 	else if (ft_strnequ(str, "Piece", 5))
 	{
@@ -56,8 +59,8 @@ void	feed_data(t_map *map, t_token *token)
 		ft_log("Token dimensions: %d %d\n", token->lines, token->columns);
 		fetch_token(token);
 		place_token(map, token);
+		// while(1){}
 	}
-	ft_log("Free @feed_data\n");
 	if(str)
 		free(str);
 }
