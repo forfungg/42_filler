@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:45:30 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/07 19:21:18 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/07 20:06:00 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,33 +36,32 @@ void	fetch_player(t_map *map)
 		free(str);
 }
 
-void	feed_data(t_map *map, t_token *token, t_brd *board)
+int		feed_data(t_game *game)
 {
 	char *str;
 
-	if (map->fd > 0 && map->map == NULL)
-		grabmap_file(map);
+	if (game->map.fd > 0 && game->map.map == NULL)
+		grabmap_file(&(game->map));
 	if (get_next_line(0, &str) < 0)
 		filler_error("Read error!");
 	if (ft_strnequ(str, "Plateau", 7))
 	{	
-		fetch_mapsize(map, str);
-		ft_log("Map dimensions: %d %d\n", map->lines, map->columns);
-		if (board->lines != map->lines || board->columns != map->columns)
-			init_board(map, board);
-		fetch_map(map);
-		// map_to_visual(map, board);
+		fetch_mapsize(&(game->map), str);
+		ft_log("Map dimensions: %d %d\n", game->map.lines, game->map.columns);
+		if (game->board.lines != game->map.lines || game->board.columns != game->map.columns)
+			init_board(&(game->map), &(game->board));
+		fetch_map(&(game->map));
+		map_to_visual(&(game->map), &(game->board));
 	}
 	else if (ft_strnequ(str, "Piece", 5))
 	{
-		fetch_tokensize(token, str);
-		ft_log("Token dimensions: %d %d\n", token->lines, token->columns);
-		fetch_token(token);
-		place_token(map, token);
+		fetch_tokensize(&(game->token), str);
+		ft_log("Token dimensions: %d %d\n", game->token.lines, game->token.columns);
+		fetch_token(&(game->token));
+		place_token(&(game->map), &(game->token));
 		// while(1){}
 	}
-	if(str)
-		free(str);
+	return(1);
 }
 
 void	fetch_mapsize(t_map *map, char *str)
@@ -94,8 +93,6 @@ void	fetch_map(t_map *map)
 		if ((int)ft_strlen(map->map[i]) != map->columns)
 			filler_error("Map line lenght error");
 		// ft_log("Free @fetch_map\n");
-		if(str)
-			free(str);
 		i++;
 	}
 }

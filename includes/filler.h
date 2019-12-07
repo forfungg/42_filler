@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/07 17:29:50 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/07 19:59:29 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # define MLX_BLUE 255
 # define MLX_GREEN 65280
 # define MLX_L_GREEN 11992832
+# define MLX_YELLOW 16776960
+# define MLX_PINK 16711935
 
 typedef struct	s_coords
 {
@@ -123,13 +125,20 @@ typedef struct	s_map
 	t_branch	left;
 }				t_map;
 
+typedef struct	s_game
+{
+	t_map	map;
+	t_token token;
+	t_brd	board;
+}				t_game;
+
 
 /*
 ** Fetch Information Functions
 */
 
 void			fetch_player(t_map *map);
-void			feed_data(t_map *map, t_token *token, t_brd *board);
+int				feed_data(t_game *game);
 void			fetch_mapsize(t_map *map, char *str);
 void			fetch_map(t_map *map);
 void			fetch_tokensize(t_token *token, char *str);
@@ -221,4 +230,5 @@ void			mapdel(t_map *map);
 void			movedel(t_map *map);
 void			tokendel(t_token *token);
 void			get_deltas(t_token *token);
+
 #endif

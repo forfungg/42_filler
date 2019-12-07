@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 15:15:14 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/07 19:30:06 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/07 20:00:20 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	p_tile_size(t_brd *board, int size)
 	square_img(board->mlx_p, &(board->p1_old));
 	board->p1_new.width = size;
 	board->p1_new.height = size;
-	board->p1_new.color = MLX_ORANGE;
+	board->p1_new.color = MLX_PINK;
 	square_img(board->mlx_p, &(board->p1_new));
 	board->p2_old.width = size;
 	board->p2_old.height = size;
@@ -143,7 +143,7 @@ void	p_tile_size(t_brd *board, int size)
 	square_img(board->mlx_p, &(board->p2_old));
 	board->p2_new.width = size;
 	board->p2_new.height = size;
-	board->p2_new.color = MLX_L_GREEN;
+	board->p2_new.color = MLX_YELLOW;
 	square_img(board->mlx_p, &(board->p2_new));
 }
 
