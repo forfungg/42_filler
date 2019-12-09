@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 09:31:19 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/03 17:19:09 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 19:16:46 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,12 @@ void		get_deltas(t_token *token)
 		}
 		i++;
 	}
+}
+
+int			is_zero_v(t_vector *v)
+{
+	if (v->start.x == 0 && v->start.y == 0 &&\
+		v->direction.x == 0 && v->direction.y == 0)
+		return (1);
+	return (0);
 }

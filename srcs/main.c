@@ -6,13 +6,13 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:36:03 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/09 18:54:09 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 19:16:57 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-int		main()
+int		main(void)
 {
 	t_game	*game;
 

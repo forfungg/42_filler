@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/09 18:52:41 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 19:16:13 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 # define TX(i) (token->tiles[i].x)
 # define TY(i) (token->tiles[i].y)
 # define IS_ZERO_P(a) (a->x == 0 && a->y == 0)
-# define IS_ZERO_V(a) (a.start.x == 0 && a.start.y == 0 && a.direction.x == 0 && a.direction.y == 0)
 # define MAP_LOG 1
 # define MLX_RED 16711680
 # define MLX_ORANGE 16733440
@@ -107,7 +106,6 @@ typedef	struct	s_board
 	t_bimg	cover_score;
 }				t_brd;
 
-
 typedef struct	s_token
 {
 	int			lines;
@@ -119,7 +117,6 @@ typedef struct	s_token
 	int			best_dist;
 	int			h_delta;
 	int			v_delta;
-	
 }				t_token;
 
 typedef struct	s_map
@@ -143,7 +140,6 @@ typedef struct	s_game
 	t_token token;
 	t_brd	board;
 }				t_game;
-
 
 /*
 ** Fetch Information Functions
@@ -178,6 +174,8 @@ void			asses_position(t_map *map, t_token *token, t_coords *here);
 
 t_coords		get_direction(t_coords *start, t_coords *point);
 void			main_vector(t_map *map);
+int				is_zero_v(t_vector *v);
+
 /*
 ** Parsing functions
 */
@@ -217,10 +215,10 @@ long double		ft_m_dist(const t_coords *a, const t_coords *b);
 ** Visual
 */
 
-void			map_to_visual(t_map *map,t_brd *board);
+void			map_to_visual(t_map *map, t_brd *board);
 void			put_tile(t_brd *board, char c, t_coords *place);
-void			enemy_turn(t_map *map,t_brd *board, int t);
-void			init_board(t_map *map,t_brd *board);
+void			enemy_turn(t_map *map, t_brd *board, int t);
+void			init_board(t_map *map, t_brd *board);
 void			init_header(t_brd *board);
 void			init_bg(t_brd *board);
 void			init_players(t_brd *board);
@@ -252,7 +250,6 @@ void			place_excl(t_brd *board, t_coords *start);
 
 int				key_press(int key, t_game *game);
 void			filler_over(t_game *game);
-
 
 /*
 ** Supportive tools
