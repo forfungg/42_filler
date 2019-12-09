@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:36:03 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/07 19:40:14 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 11:45:50 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,21 @@ int		main(int ac, char **av)
 		free(str);
 		close(game->map.fd);
 	}
+	mlx_hook(game->board.win, 2, 0, key_press, game);
 	mlx_loop_hook(game->board.mlx_p, feed_data, game);
 	// feed_data(&map, &token, board);
 	mlx_loop(game->board.mlx_p);
 	return(0);
 }
+/* TO-DO 
+	
+	- introduce the critical points! (guarantee win)
+	- visual key interactions (esc, vectors?, reset (after drawing some shit))
+	- legend
+	- score counter?
+	- strat log?
+
+	- norm and clean up
+	
+	- fix graphics (right line is 2p)
+*/

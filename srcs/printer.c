@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:10:46 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/11/27 18:09:08 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 11:45:24 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,6 @@ void	token_to_map(t_map *map, t_token *token)
 	int		i;
 	int		j;
 
-	i = 0;
-	while (i < map->lines)
-	{
-		j = 0;
-		while (j < map->columns)
-		{
-			map->map[i][j] = ft_toupper(map->map[i][j]);
-			j++;
-		}
-		i++;
-	}
 	i = 0;
 	while (i < token->lines)
 	{

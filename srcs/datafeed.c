@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:45:30 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/07 20:06:00 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 14:36:48 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,13 @@ int		feed_data(t_game *game)
 		if (game->board.lines != game->map.lines || game->board.columns != game->map.columns)
 			init_board(&(game->map), &(game->board));
 		fetch_map(&(game->map));
-		map_to_visual(&(game->map), &(game->board));
 	}
 	else if (ft_strnequ(str, "Piece", 5))
 	{
 		fetch_tokensize(&(game->token), str);
 		ft_log("Token dimensions: %d %d\n", game->token.lines, game->token.columns);
 		fetch_token(&(game->token));
-		place_token(&(game->map), &(game->token));
+		place_token(game);
 		// while(1){}
 	}
 	return(1);

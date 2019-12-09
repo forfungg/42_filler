@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 15:18:31 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/03 16:17:10 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 13:04:10 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ t_coords	right_bottom(t_map *map, t_token *token)
 	return (rb);
 }
 
-void		resize_square(t_map *map, t_coords *l_top, t_coords *r_bot)
+void		resize_square(t_game *game, t_coords *l_top, t_coords *r_bot)
 {
-	if (l_top->x == 0 && l_top->y == 0 && r_bot->x == map->columns - 1 && r_bot->y == map->lines - 1)
-		filler_error("GAME OVER!");
+	if (l_top->x == 0 && l_top->y == 0 && r_bot->x == game->map.columns - 1 && r_bot->y == game->map.lines - 1)
+		filler_over(game);
 	l_top->x = l_top->x > 0 ? l_top->x - 1: 0;
 	l_top->y = l_top->y > 0 ? l_top->y - 1: 0;
-	r_bot->x = r_bot->x < map->columns - 1 ? r_bot->x + 1: map->columns - 1;
-	r_bot->y = r_bot->y < map->lines - 1 ? r_bot->y + 1: map->lines - 1;
+	r_bot->x = r_bot->x < game->map.columns - 1 ? r_bot->x + 1: game->map.columns - 1;
+	r_bot->y = r_bot->y < game->map.lines - 1 ? r_bot->y + 1: game->map.lines - 1;
 	ft_log("Map of interest resized (%d x %d)\n", r_bot->y - l_top->y, r_bot->x - l_top->x);
 }
 

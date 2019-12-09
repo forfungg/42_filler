@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/07 19:59:29 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 14:31:05 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 # define IS_DIGIT(x) (x >= '0' && x <= '9')
 # define IS_MINE(x) (x == map->player || x == map->player + 32)
+# define IS_MINEG(x) (x == game->map.player || x == game->map.player + 32)
 # define IS_ENEMY(x) (x == map->enemy || x == map->enemy + 32)
 # define IS_ANCHOR(i) (token->tiles[i].x == 0 && token->tiles[i].y == 0)
 # define IS_FREE(x,y) (map->map[y][x] == '.')
@@ -93,6 +94,8 @@ typedef	struct	s_board
 	t_bimg	p1_new;
 	t_bimg	p2_old;
 	t_bimg	p2_new;
+	t_bimg	game_over;
+	t_bimg	cover_score;
 }				t_brd;
 
 
@@ -118,7 +121,9 @@ typedef struct	s_map
 	t_brd		board;
 	char		**move;
 	char		player;
+	int			my_score;
 	char		enemy;
+	int			en_score;
 	int			fd;
 	t_vector	main_v;
 	t_branch	right;
@@ -151,8 +156,8 @@ void			grabmap_file(t_map *map);
 ** Logic Functions
 */
 
-void			place_token(t_map *map, t_token *token);
-void			find_place(t_map *map, t_token *token, t_coords *i);
+void			place_token(t_game *game);
+void			find_place(t_game *game, t_coords *i);
 int				check_place(t_map *map, t_token *token, t_coords *here);
 int				is_fit(t_map *map, t_token *token, t_coords *here);
 void			ft_middle(t_map *map, t_coords *center);
@@ -173,7 +178,7 @@ void			main_vector(t_map *map);
 
 t_coords		left_top(t_map *map, t_token *token);
 t_coords		right_bottom(t_map *map, t_token *token);
-void			resize_square(t_map *map, t_coords *l_top, t_coords *r_bot);
+void			resize_square(t_game *game, t_coords *l_top, t_coords *r_bot);
 
 /*
 ** Scoring & Strategy Functions
@@ -189,7 +194,6 @@ void			adjust_edge(t_map *map, t_token *token, t_coords *p);
 */
 
 void			print_map(t_map *map);
-void			place_token(t_map *map, t_token *token);
 void			filler_error(char *str);
 void			token_to_map(t_map *map, t_token *token);
 
@@ -212,8 +216,20 @@ void			init_bg(t_brd *board);
 void			init_players(t_brd *board);
 void			p_tile_size(t_brd *board, int size);
 void			init_game_board(t_brd *board);
+void			init_gameover(t_brd *board);
+void			init_coverscore(t_brd *board);
 void			square_img(void *mlx_ptr, t_bimg *elem);
 char			*brd_s_str(int width, int height);
+void			game_over_show(t_brd *board);
+void			show_score(t_game *game);
+
+/*
+** MLX control
+*/
+
+int				key_press(int key, t_game *game);
+void			filler_over(t_game *game);
+
 
 /*
 ** Supportive tools

@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 15:15:14 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/07 20:00:20 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 14:48:26 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@ void	map_to_visual(t_map *map,t_brd *board)
 {
 	int	i;
 	int	j;
+	int e_turn;
+	char *who;
 
 	i = 0;
+	e_turn = 0;
 	while (i < map->lines)
 	{
 		j = 0;
@@ -28,15 +31,34 @@ void	map_to_visual(t_map *map,t_brd *board)
 			else if (map->map[i][j] == 'O')
 				mlx_put_image_to_window(board->mlx_p, board->win, board->p1_old.img, board->brdoff_l + 1 + j * (board->empty.width + 1), board->brdoff_t + 1 + i * (board->empty.height + 1));
 			else if (map->map[i][j] == 'o')
+			{
 				mlx_put_image_to_window(board->mlx_p, board->win, board->p1_new.img, board->brdoff_l + 1 + j * (board->empty.width + 1), board->brdoff_t + 1 + i * (board->empty.height + 1));
+				map->enemy == 'O' ? e_turn = 1 : 0;
+			}
 			else if (map->map[i][j] == 'X')
 				mlx_put_image_to_window(board->mlx_p, board->win, board->p2_old.img, board->brdoff_l + 1 + j * (board->empty.width + 1), board->brdoff_t + 1 + i * (board->empty.height + 1));
 			else if (map->map[i][j] == 'x')
+			{
 				mlx_put_image_to_window(board->mlx_p, board->win, board->p2_new.img, board->brdoff_l + 1 + j * (board->empty.width + 1), board->brdoff_t + 1 + i * (board->empty.height + 1));
+				map->enemy == 'X' ? e_turn = 1 : 0;
+			}
 			j++;
 		}
 		i++;
 	}
+	if (!e_turn)
+	{
+		game_over_show(board);
+		if (map->my_score > map->en_score)
+			who = "I WON";
+		else if (map->my_score == map->en_score)
+			who = "DRAW";
+		else
+			who = "ENEMY WON";
+		mlx_string_put(board->mlx_p, board->win, 595, 650, MLX_BLUE, who);
+	}
+	else
+		map->en_score++;
 }
 
 void	square_img(void *mlx_ptr, t_bimg *elem)
@@ -72,6 +94,8 @@ void	init_board(t_map *map,t_brd *board)
 	init_game_board(board);
 	ft_log("** game_board (%d x %d): color = %d\n", board->game_board.width, board->game_board.height, board->game_board.color);
 	ft_log("** brdoff_l = %d | brdoff_t = %d\n\n", board->brdoff_l, board->brdoff_t);
+	init_gameover(board);
+	init_coverscore(board);
 }
 
 void	init_header(t_brd *board)
@@ -87,8 +111,8 @@ void	init_header(t_brd *board)
 	mlx_string_put(board->mlx_p, board->win, 535, 10, MLX_WHITE, "FILLER MATCH");
 	str = brd_s_str(board->columns, board->lines);
 	mlx_string_put(board->mlx_p, board->win, 565, 40, MLX_WHITE, str);
-	mlx_string_put(board->mlx_p, board->win, 265, 40, MLX_RED, "PLAYER 1");
-	mlx_string_put(board->mlx_p, board->win, 865, 40, MLX_GREEN, "PLAYER 2");
+	mlx_string_put(board->mlx_p, board->win, 225, 10, MLX_RED, "PLAYER 1");
+	mlx_string_put(board->mlx_p, board->win, 925, 10, MLX_GREEN, "PLAYER 2");
 }
 
 void	init_bg(t_brd *board)
@@ -147,6 +171,14 @@ void	p_tile_size(t_brd *board, int size)
 	square_img(board->mlx_p, &(board->p2_new));
 }
 
+void	init_gameover(t_brd *board)
+{
+	board->game_over.width = 20;
+	board->game_over.height = 20;
+	board->game_over.color = MLX_BLUE;
+	square_img(board->mlx_p, &(board->game_over));
+}
+
 char	*brd_s_str(int width, int height)
 {
 	char *res;
@@ -162,4 +194,150 @@ char	*brd_s_str(int width, int height)
 	free(str_h);
 	free(tmp);
 	return (res);
+}
+
+void	game_over_show(t_brd *board)
+{
+	t_coords	start;
+
+	start.x = board->bg.width / 2 - 420;
+	start.y = board->bg.height / 2 + board->header.height - 40;
+
+	/* G */
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 20, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 40, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x, start.y + 20);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 40, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 60, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x, start.y + 60);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 60, start.y + 60);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 20, start.y + 80);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 40, start.y + 80);
+
+	/* A */
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 120, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 140, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 100, start.y + 20);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 160, start.y + 20);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 100, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 120, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 140, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 160, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 100, start.y + 60);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 160, start.y + 60);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 100, start.y + 80);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 160, start.y + 80);
+
+	/* M */
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 200, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 280, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 200, start.y + 20);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 220, start.y + 20);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 260, start.y + 20);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 280, start.y + 20);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 200, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 240, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 280, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 200, start.y + 60);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 280, start.y + 60);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 200, start.y + 80);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 280, start.y + 80);
+
+	/* E */
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 320, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 340, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 360, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 380, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 320, start.y + 20);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 320, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 340, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 360, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 320, start.y + 60);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 320, start.y + 80);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 340, start.y + 80);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 360, start.y + 80);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 380, start.y + 80);
+
+	/* O */
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 480, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 500, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 460, start.y + 20);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 520, start.y + 20);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 460, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 520, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 460, start.y + 60);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 520, start.y + 60);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 480, start.y + 80);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 500, start.y + 80);
+
+	/* V */
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 560, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 640, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 560, start.y + 20);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 640, start.y + 20);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 580, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 620, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 580, start.y + 60);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 620, start.y + 60);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 600, start.y + 80);
+
+	/* E */
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 680, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 700, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 720, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 740, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 680, start.y + 20);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 680, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 700, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 720, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 680, start.y + 60);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 680, start.y + 80);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 700, start.y + 80);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 720, start.y + 80);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 740, start.y + 80);
+
+	/* R */
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 780, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 800, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 820, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 780, start.y + 20);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 840, start.y + 20);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 780, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 800, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 820, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 780, start.y + 60);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 820, start.y + 60);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 780, start.y + 80);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 840, start.y + 80);
+	
+	/* ! */
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 900, start.y);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 900, start.y + 20);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 900, start.y + 40);
+	mlx_put_image_to_window(board->mlx_p, board->win, board->game_over.img, start.x + 900, start.y + 80);
+}
+
+void	init_coverscore(t_brd *board)
+{
+	board->cover_score.width = 100;
+	board->cover_score.height = 30;
+	board->cover_score.color = MLX_BLUE;
+	square_img(board->mlx_p, &(board->cover_score));
+}
+
+void	show_score(t_game *game)
+{
+	char *mine;
+	char *enemy;
+
+	mine = ft_itoa(game->map.my_score);
+	enemy = ft_itoa(game->map.en_score);
+	mlx_put_image_to_window(game->board.mlx_p, game->board.win, game->board.cover_score.img, 235, 30);
+	mlx_put_image_to_window(game->board.mlx_p, game->board.win, game->board.cover_score.img, 935, 30);
+	mlx_string_put(game->board.mlx_p, game->board.win, 245, 40, MLX_WHITE, game->map.player == 'O' ? mine : enemy);
+	mlx_string_put(game->board.mlx_p, game->board.win, 945, 40, MLX_WHITE, game->map.player == 'X' ? mine : enemy);
+	ft_log("Score: me(%s) vs enemy(%s)\n", mine, enemy);
+	free(mine);
+	free(enemy);
 }

@@ -6,7 +6,7 @@
 #    By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 18:30:20 by jnovotny          #+#    #+#              #
-#    Updated: 2019/12/07 17:32:51 by jnovotny         ###   ########.fr        #
+#    Updated: 2019/12/09 11:21:35 by jnovotny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ FTS =	main.c \
 		calculus_tools.c \
 		ft_sqrt_prec.c \
 		visualizator.c \
-		logger.c
+		logger.c \
+		mlx_control.c
 
 FTO = $(FTS.c=.o)
 
@@ -46,9 +47,9 @@ O_DIR = ./objs/
 
 SRCS = $(addprefix $(S_DIR), $(FTS))
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -O3
 
-GRAPHIC = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
+GRAPHIC = -I./minilibx -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 
 .PHONY: all clean fclean re libft
 

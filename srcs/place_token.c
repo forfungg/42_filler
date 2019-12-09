@@ -6,44 +6,47 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 10:22:41 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/03 16:17:03 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 14:41:52 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void	place_token(t_map *map, t_token *token)
+void	place_token(t_game *game)
 {
 	t_coords here;
 
-	if (IS_ZERO_V(map->main_v))
-		main_vector(map);
+	if (IS_ZERO_V(game->map.main_v))
+		main_vector(&(game->map));
 	// set_crits(map);
-	ft_log_status(map, token);
-	find_place(map, token, &here);
+	ft_log_status(&(game->map), &(game->token));
+	find_place(game, &here);
 	// update my strat values;
-	here = token->best;
-	adjust_edge(map, token, &here);
-	ft_log("Pre-adjust coords: %dx%d\n", token->best.y, token->best.x);
-	adjust_out(token);
-	ft_log("Placement @ %dx%d\n", token->best.y, token->best.x);
-	ft_log("--------NEXT ROUND----------\n");
-	token_to_map(map, token);
+	here = game->token.best;
+	adjust_edge(&(game->map), &(game->token), &here);
+	ft_log("Pre-adjust coords: %dx%d\n", game->token.best.y, game->token.best.x);
+	adjust_out(&(game->token));
+	ft_log("Placement @ %dx%d\n", game->token.best.y, game->token.best.x);
+	token_to_map(&(game->map), &(game->token));
+	game->map.my_score++;
+	map_to_visual(&(game->map), &(game->board));
+	show_score(game);
 	if (MAP_LOG)
-		print_map(map);
-	ft_printf("%d %d\n", token->best.y, token->best.x);
-	reset_game(map, token);
-	token->map = NULL;
+		print_map(&(game->map));
+	ft_printf("%d %d\n", game->token.best.y, game->token.best.x);
+	reset_game(&(game->map), &(game->token));
+	game->token.map = NULL;
+	ft_log("--------NEXT ROUND----------\n");
 }
 
-void	find_place(t_map *map, t_token *token, t_coords *i)
+void	find_place(t_game *game, t_coords *i)
 {
 	t_coords l_top;
 	t_coords r_bot;
 
-	l_top = left_top(map, token);
-	r_bot = right_bottom(map, token);
-	while (!(l_top.x == 0 && l_top.y == 0 && r_bot.y == map->lines && r_bot.x == map->columns))
+	l_top = left_top(&(game->map), &(game->token));
+	r_bot = right_bottom(&(game->map), &(game->token));
+	while (1)
 	{
 		ft_log("\nSearching in area %dx%d from [%d, %d]\n", r_bot.y - l_top.y, r_bot.x - l_top.x, l_top.y, l_top.x);
 		i->y = l_top.y;
@@ -52,14 +55,14 @@ void	find_place(t_map *map, t_token *token, t_coords *i)
 			i->x = l_top.x;
 			while (i->x < r_bot.x)
 			{
-				if (IS_MINE(map->map[i->y][i->x]))
-					check_place(map, token, i);
+				if (IS_MINEG(game->map.map[i->y][i->x]))
+					check_place(&(game->map), &(game->token), i);
 				i->x++;
 			}
 			i->y++;
 		}
-		if (token->best.x < 0 || token->best.y < 0)
-			resize_square(map, &l_top, &r_bot);
+		if (game->token.best.x < 0 || game->token.best.y < 0)
+			resize_square(game, &l_top, &r_bot);
 		else
 			return ;
 	}
