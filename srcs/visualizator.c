@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 15:15:14 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/09 14:48:26 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 15:24:48 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void	init_bg(t_brd *board)
 	board->bg.color = MLX_WHITE;
 	square_img(board->mlx_p, &(board->bg));
 	mlx_put_image_to_window(board->mlx_p, board->win, board->bg.img, 0, 80);
+	mlx_string_put(board->mlx_p, board->win, 10, 980, 0, "(ESC) Exit");
 }
 
 void	init_players(t_brd *board)
