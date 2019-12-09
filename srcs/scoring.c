@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 17:30:33 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/09 18:14:56 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 19:58:35 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		tile_score(t_map *map, t_coords *t)
 	if (t->y < map->lines - 1 && map->map[t->y + 1][t->x] != '.')
 		map->map[t->y + 1][t->x] == map->player ? nb_f++ : nb_e++;
 	mp = t->x == 0 || t->y == 0 ? 250 : 100;
-	mp = t->x == map->columns - 1 || t->y == map->lines - 1 ? 250 : 100;
+	mp = t->x == map->columns - 1 || t->y == map->lines - 1 ? 500 : 250;
 	res += nb_e * nb_e * nb_e * mp;
 	return (res + distance_score(map, t));
 }

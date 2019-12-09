@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/09 19:16:13 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 20:30:46 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,5 +264,6 @@ void			reset_game(t_map *map, t_token *token);
 void			mapdel(t_map *map);
 void			tokendel(t_token *token);
 void			get_deltas(t_token *token);
+int				abs_val(int a);
 
 #endif

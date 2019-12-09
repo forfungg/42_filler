@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 18:14:41 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/09 18:14:50 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 20:38:29 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,28 @@ void	adjust_left(t_map *map, t_token *token, t_coords *p)
 		if (d_c > d_o)
 			map->left.edge = tmp;
 		i++;
+	}
+}
+
+void	adjust_left_crit(t_map *map)
+{
+	t_coords	d;
+	t_coords	i;
+	t_coords	best;
+
+	d.x = map->main_v.direction.x > 0 ? -1 : 1;
+	d.y = map->main_v.direction.y > 0 ? -1 : 1;
+	best = map->left.edge;
+	i.y = map->left.edge.y;
+	while (-1 < i.y < map->lines)
+	{
+		i.x = map->left.edge.x;
+		while (-1 < i.x < map->columns)
+		{
+			if (IS_ENEMY(map->map[i.y][i.x]))
+				
+			i.x += d.x;
+		}
+		i.y += d.y;
 	}
 }

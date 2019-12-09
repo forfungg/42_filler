@@ -6,7 +6,7 @@
 #    By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 18:30:20 by jnovotny          #+#    #+#              #
-#    Updated: 2019/12/09 18:30:15 by jnovotny         ###   ########.fr        #
+#    Updated: 2019/12/09 20:30:54 by jnovotny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ FTS =	calculus_tools.c \
 		scoring.c \
 		strat_adjust.c \
 		tools.c \
+		tools2.c \
 		vectors.c \
 		visual_bg.c \
 		visual_img.c \
