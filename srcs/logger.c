@@ -6,18 +6,17 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 17:20:01 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/03 17:20:54 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:53:26 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-
 void	ft_log(char *msg, ...)
 {
 	va_list	args;
 	FILE	*log_file;
-	
+
 	log_file = fopen("jn_log.txt", "a+");
 	va_start(args, msg);
 	vfprintf(log_file, msg, args);

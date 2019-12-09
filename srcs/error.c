@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:58:40 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/09 15:24:35 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 18:49:59 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	filler_error(char *str)
 {
 	ft_printf("{RED}%s{EOC}\n", str);
 	ft_log("Exit: %s\n", str);
-	// while(1){}
 	exit(-1);
 }
 
@@ -34,5 +33,5 @@ void	filler_over(t_game *game)
 	mlx_string_put(game->board.mlx_p, game->board.win, 595, 650, MLX_BLUE, who);
 	mlx_hook(game->board.win, 2, 0, key_press, game);
 	mlx_loop(game->board.mlx_p);
-	exit (0);
+	exit(0);
 }

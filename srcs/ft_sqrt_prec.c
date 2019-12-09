@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 12:32:47 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/02 14:55:01 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:51:07 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ long double	ft_sqrt_prec(long double nb, int prec)
 	res = 0;
 	if (nb <= 0)
 		return (0);
-	if (prec < 3)
-		prec = 3;
-	else if (prec > 20)
-		prec = 20;
+	prec < 3 ? prec = 3 : 0;
+	prec > 20 ? prec = 20 : 0;
 	p = 5;
 	i = 0;
 	while (i++ <= prec)

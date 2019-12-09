@@ -6,157 +6,57 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:45:30 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/09 14:36:48 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 18:51:58 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void	fetch_player(t_map *map)
-{
-	char *str;
-
-	get_next_line(0, &str);
-	if (ft_strnequ(str, "$$$ exec", 8) && map->player == 0)
-	{
-		if (ft_strstr(str, "p1"))
-		{
-			map->player = 'O';
-			map->enemy = 'X';
-		}
-		else if (ft_strstr(str, "p2"))
-		{
-			map->player = 'X';
-			map->enemy = 'O';
-		}
-		else
-			filler_error("Player order not found!");
-	}
-	if(str)
-		free(str);
-}
-
 int		feed_data(t_game *game)
 {
 	char *str;
 
-	if (game->map.fd > 0 && game->map.map == NULL)
-		grabmap_file(&(game->map));
 	if (get_next_line(0, &str) < 0)
 		filler_error("Read error!");
 	if (ft_strnequ(str, "Plateau", 7))
-	{	
+	{
 		fetch_mapsize(&(game->map), str);
-		ft_log("Map dimensions: %d %d\n", game->map.lines, game->map.columns);
-		if (game->board.lines != game->map.lines || game->board.columns != game->map.columns)
+		ft_log("Map dimensions: %d %d\n", G_M_LINES, G_M_COLUMNS);
+		if (G_B_LINES != G_M_LINES || G_B_COLUMNS != G_M_COLUMNS)
 			init_board(&(game->map), &(game->board));
 		fetch_map(&(game->map));
 	}
 	else if (ft_strnequ(str, "Piece", 5))
 	{
 		fetch_tokensize(&(game->token), str);
-		ft_log("Token dimensions: %d %d\n", game->token.lines, game->token.columns);
+		ft_log("Token dimensions: %d %d\n", G_T_LINES, G_T_COLUMNS);
 		fetch_token(&(game->token));
 		place_token(game);
-		// while(1){}
 	}
-	return(1);
-}
-
-void	fetch_mapsize(t_map *map, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (!IS_DIGIT(str[i]))
-		i++;
-	map->lines = ft_atoi(&str[i]);
-	while (IS_DIGIT(str[i]))
-		i++;
-	map->columns = ft_atoi(&str[i]);
-}
-
-void	fetch_map(t_map *map)
-{
-	char	*str;
-	int		i;
-
-	skip_line(map->fd);
-	i = 0;
-	map->map = (char **)malloc(sizeof(char *) * (map->lines + 1)); /*protect*/
-	map->map[map->lines] = NULL;
-	while (i < map->lines)
-	{
-		get_next_line(map->fd, &str);
-		map->map[i] = ft_strdup(&str[4]);
-		if ((int)ft_strlen(map->map[i]) != map->columns)
-			filler_error("Map line lenght error");
-		// ft_log("Free @fetch_map\n");
-		i++;
-	}
-}
-
-void	fetch_tokensize(t_token *token, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (!IS_DIGIT(str[i]))
-		i++;
-	token->lines = ft_atoi(&str[i]);
-	while (IS_DIGIT(str[i]))
-		i++;
-	token->columns = ft_atoi(&str[i]);
-}
-
-void	fetch_token(t_token *token)
-{
-	int		i;
-	char	*str;
-
-	i = 0;
-	token->map = (char **)malloc(sizeof(char *) * (token->lines + 1)); /*protect*/
-	token->map[token->lines] = NULL;
-	while (i < token->lines)
-	{
-		get_next_line(0, &str);
-		// if (str == NULL || str[0] == '\0')
-		// 	continue;
-		token->map[i] = ft_strdup(str);
-		ft_log("%s\n", str);
-		//free(str);
-		// ft_log("-> DONE\n");
-		if ((int)ft_strlen(token->map[i]) != token->columns)
-			filler_error("Token line lenght error");
-		i++;
-	}
-	ft_log("\n");
-	transcribe_token(token);
+	return (1);
 }
 
 void	transcribe_token(t_token *token)
 {
-	int i;
-	int j;
-	int	t;
-	
+	t_coords	i;
+	int			t;
+
 	init_tiles(token);
-	i = 0;
+	i.y = 0;
 	t = 0;
-	while (i < token->lines)
+	while (i.y < token->lines)
 	{
-		j = 0;
-		while (j < token->columns)
+		i.x = 0;
+		while (i.x < token->columns)
 		{
-			if (token->map[i][j] == '*')
+			if (token->map[i.y][i.x] == '*')
 			{
-				token->tiles[t].x = j;
-				token->tiles[t].y = i;
+				token->tiles[t] = i;
 				t++;
 			}
-			j++;
+			i.x++;
 		}
-		i++;
+		i.y++;
 	}
 	anchor_token(token, 0);
 	get_deltas(token);
@@ -169,7 +69,7 @@ void	init_tiles(t_token *token)
 {
 	int i;
 	int j;
-	
+
 	token->cnt_tiles = 0;
 	i = 0;
 	while (i < token->lines)
@@ -183,22 +83,4 @@ void	init_tiles(t_token *token)
 		i++;
 	}
 	token->tiles = (t_coords *)malloc(sizeof(t_coords) * token->cnt_tiles);
-}
-
-void	grabmap_file(t_map *map)
-{
-	char	*str;
-
-	ft_log("Fetching the map from a file\n");
-	map->fd = open("my_map", O_RDONLY);
-	if (map->fd == -1)
-		filler_error("Unable to open my_map");
-	get_next_line(map->fd, &str);
-	fetch_mapsize(map, str);
-	ft_log("Map dimensions: %d %d\n", map->lines, map->columns);
-	fetch_map(map);
-	ft_log("Free @grabmap_file\n");
-	if(str)
-		free(str);
-	close(map->fd);
 }

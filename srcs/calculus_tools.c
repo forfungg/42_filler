@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 10:56:40 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/02 17:49:40 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:29:03 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@ long double		dist_direct(t_map *map, t_coords *p)
 
 	qd.x = map->main_v.direction.x > 0 ? 1 : -1;
 	qd.y = map->main_v.direction.y > 0 ? 1 : -1;
-
 	if (p->x == map->main_v.start.x && p->y == map->main_v.start.y)
-		return((long double)0);
+		return ((long double)0);
 	a = ft_m_dist(&(map->main_v.start), p);
-	b = ft_sqrt_prec(a*a*2, 5)/2;
+	b = ft_sqrt_prec(a * a * 2, 5) / 2;
 	d.x = map->main_v.start.x - p->x > 0 ? 1 : -1;
 	d.y = map->main_v.start.y - p->y > 0 ? 1 : -1;
 	if (qd.x == d.x && qd.y == d.y)
@@ -40,6 +39,7 @@ long double		ft_m_dist(const t_coords *a, const t_coords *b)
 {
 	int i;
 	int k;
+
 	if (a == b)
 		return (0);
 	i = a->x - b->x;
@@ -47,7 +47,7 @@ long double		ft_m_dist(const t_coords *a, const t_coords *b)
 	return (ft_sqrt_prec(i * i + k * k, 5));
 }
 
-void	ft_middle(t_map *map, t_coords *center)
+void			ft_middle(t_map *map, t_coords *center)
 {
 	center->x = map->columns / 2;
 	center->y = map->lines / 2;

@@ -476,3 +476,7 @@ Plateau 24 40:
 023 ........................................
 Fetching the map from a file
 Map dimensions: 24 40
+
+************START***********
+
+************START***********

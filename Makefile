@@ -6,7 +6,7 @@
 #    By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 18:30:20 by jnovotny          #+#    #+#              #
-#    Updated: 2019/12/09 11:21:35 by jnovotny         ###   ########.fr        #
+#    Updated: 2019/12/09 18:30:15 by jnovotny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,20 +22,28 @@ NAME = jnovotny.filler
 
 LIB = ../printf/libftprintf.a
 
-FTS =	main.c \
+FTS =	calculus_tools.c \
 		datafeed.c \
 		error.c \
-		tools.c \
-		printer.c \
-		place_token.c \
-		scoring.c \
-		vectors.c \
-		map_parse.c \
-		calculus_tools.c \
+		fetch_data.c \
 		ft_sqrt_prec.c \
-		visualizator.c \
+		gg_img.c \
+		gg_img2.c \
 		logger.c \
-		mlx_control.c
+		main.c \
+		map_parse.c \
+		mlx_control.c \
+		place_token.c \
+		place_token2.c \
+		printer.c \
+		scoring.c \
+		strat_adjust.c \
+		tools.c \
+		vectors.c \
+		visual_bg.c \
+		visual_img.c \
+		visualizator.c
+		
 
 FTO = $(FTS.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/09 14:31:05 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/09 18:52:41 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,15 @@
 # define MLX_L_GREEN 11992832
 # define MLX_YELLOW 16776960
 # define MLX_PINK 16711935
+# define MLX_P board->mlx_p
+# define MLX_W board->win
+# define GG_IMG board->game_over.img
+# define G_B_LINES game->board.lines
+# define G_B_COLUMNS game->board.columns
+# define G_M_LINES game->map.lines
+# define G_M_COLUMNS game->map.columns
+# define G_T_LINES game->token.lines
+# define G_T_COLUMNS game->token.columns
 
 typedef struct	s_coords
 {
@@ -119,12 +128,10 @@ typedef struct	s_map
 	int			columns;
 	char		**map;
 	t_brd		board;
-	char		**move;
 	char		player;
 	int			my_score;
 	char		enemy;
 	int			en_score;
-	int			fd;
 	t_vector	main_v;
 	t_branch	right;
 	t_branch	left;
@@ -150,7 +157,6 @@ void			fetch_tokensize(t_token *token, char *str);
 void			fetch_token(t_token *token);
 void			transcribe_token(t_token *token);
 void			init_tiles(t_token *token);
-void			grabmap_file(t_map *map);
 
 /*
 ** Logic Functions
@@ -188,6 +194,8 @@ int				move_score(t_map *map, t_token *token, t_coords *here);
 int				tile_score(t_map *map, t_coords *t);
 int				distance_score(t_map *map, t_coords *t);
 void			adjust_edge(t_map *map, t_token *token, t_coords *p);
+void			adjust_right(t_map *map, t_token *token, t_coords *p);
+void			adjust_left(t_map *map, t_token *token, t_coords *p);
 
 /*
 **	Print Functions
@@ -210,6 +218,8 @@ long double		ft_m_dist(const t_coords *a, const t_coords *b);
 */
 
 void			map_to_visual(t_map *map,t_brd *board);
+void			put_tile(t_brd *board, char c, t_coords *place);
+void			enemy_turn(t_map *map,t_brd *board, int t);
 void			init_board(t_map *map,t_brd *board);
 void			init_header(t_brd *board);
 void			init_bg(t_brd *board);
@@ -222,6 +232,19 @@ void			square_img(void *mlx_ptr, t_bimg *elem);
 char			*brd_s_str(int width, int height);
 void			game_over_show(t_brd *board);
 void			show_score(t_game *game);
+
+/*
+** GG
+*/
+
+void			place_g(t_brd *board, t_coords *start);
+void			place_a(t_brd *board, t_coords *start);
+void			place_m(t_brd *board, t_coords *start);
+void			place_e(t_brd *board, t_coords *start);
+void			place_o(t_brd *board, t_coords *start);
+void			place_v(t_brd *board, t_coords *start);
+void			place_r(t_brd *board, t_coords *start);
+void			place_excl(t_brd *board, t_coords *start);
 
 /*
 ** MLX control
@@ -241,9 +264,7 @@ void			adjust_out(t_token *token);
 void			ft_log(char *msg, ...);
 void			ft_log_status(t_map *map, t_token *token);
 void			reset_game(t_map *map, t_token *token);
-void			mapcpy(t_map *src);
 void			mapdel(t_map *map);
-void			movedel(t_map *map);
 void			tokendel(t_token *token);
 void			get_deltas(t_token *token);
 
