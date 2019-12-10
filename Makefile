@@ -6,7 +6,7 @@
 #    By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 18:30:20 by jnovotny          #+#    #+#              #
-#    Updated: 2019/12/09 20:30:54 by jnovotny         ###   ########.fr        #
+#    Updated: 2019/12/10 15:04:11 by jnovotny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ SRCS = $(addprefix $(S_DIR), $(FTS))
 
 CFLAGS = -Wall -Werror -Wextra -O3
 
-GRAPHIC = -I./minilibx -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
+GRAPHIC = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 
 .PHONY: all clean fclean re libft
 

@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/09 20:30:46 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/10 17:00:45 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ typedef struct	s_vector
 typedef struct	s_strat_branch
 {
 	t_coords	edge;
-	t_coords	crit_max;
-	t_coords	crit_min;
+	t_coords	crit;
+	double		cr;
 }				t_branch;
 
 typedef struct	s_scoretab
@@ -194,6 +194,11 @@ int				distance_score(t_map *map, t_coords *t);
 void			adjust_edge(t_map *map, t_token *token, t_coords *p);
 void			adjust_right(t_map *map, t_token *token, t_coords *p);
 void			adjust_left(t_map *map, t_token *token, t_coords *p);
+void			adjust_left_crit(t_map *map);
+void			adjust_right_crit(t_map *map);
+void			l_search_area(t_map *map, t_coords *start, t_coords *d, char side);
+void			r_search_area(t_map *map, t_coords *start, t_coords *d, char side);
+double			angle_ratio(t_coords *a, t_coords *b, char side);
 
 /*
 **	Print Functions

@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 10:22:41 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/09 19:15:39 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/10 17:00:09 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ void	place_token(t_game *game)
 	if (is_zero_v(&(game->map.main_v)))
 		main_vector(&(game->map));
 	ft_log_status(&(game->map), &(game->token));
+	adjust_left_crit(&(game->map));
+	adjust_right_crit(&(game->map));
+	ft_log_status(&(game->map), &(game->token));
 	find_place(game, &here);
 	here = game->token.best;
 	adjust_edge(&(game->map), &(game->token), &here);
@@ -28,6 +31,8 @@ void	place_token(t_game *game)
 	ft_log("Placement @ %dx%d\n", game->token.best.y, game->token.best.x);
 	token_to_map(&(game->map), &(game->token));
 	game->map.my_score++;
+	if (MAP_LOG)
+		print_map(&(game->map));
 	map_to_visual(&(game->map), &(game->board));
 	show_score(game);
 	ft_printf("%d %d\n", game->token.best.y, game->token.best.x);

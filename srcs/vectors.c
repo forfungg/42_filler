@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 09:31:19 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/09 19:16:46 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/10 15:18:48 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void		main_vector(t_map *map)
 	map->right.edge = mine;
 	map->left.edge = mine;
 	find_enemy(map, &enemy);
-	map->right.crit_max = enemy;
-	map->right.crit_min = enemy;
-	map->left.crit_max = enemy;
-	map->left.crit_min = enemy;
+	map->right.crit = enemy;
+	map->right.cr = angle_ratio(&enemy, &mine, 'r');
+	map->left.crit = enemy;
+	map->left.cr = angle_ratio(&enemy, &mine, 'r');
 	map->main_v.start = mine;
 	map->main_v.direction = get_direction(&mine, &enemy);
 }
