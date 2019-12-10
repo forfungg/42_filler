@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/10 17:00:45 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:02:46 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,11 @@ typedef struct	s_token
 	char		**map;
 	int			cnt_tiles;
 	t_coords	*tiles;
+	t_coords	best_left;
+	t_coords	best_right;
+	int			best_left_dist;
+	int			best_right_dist;
 	t_coords	best;
-	int			best_dist;
-	int			h_delta;
-	int			v_delta;
 }				t_token;
 
 typedef struct	s_map
@@ -159,14 +160,14 @@ void			init_tiles(t_token *token);
 */
 
 void			place_token(t_game *game);
-void			find_place(t_game *game, t_coords *i);
-int				check_place(t_map *map, t_token *token, t_coords *here);
+void			find_place(t_game *game, t_coords *i, char side);
+int				check_place(t_map *map, t_token *token, t_coords *here, char side);
 int				is_fit(t_map *map, t_token *token, t_coords *here);
 void			ft_middle(t_map *map, t_coords *center);
 void			find_mine(t_map *map, t_coords *mine);
 void			find_enemy(t_map *map, t_coords *enemy);
 int				player_distance(t_map *map);
-void			asses_position(t_map *map, t_token *token, t_coords *here);
+void			asses_position(t_map *map, t_token *token, t_coords *here, char side);
 
 /*
 **	Vectors
@@ -180,17 +181,17 @@ int				is_zero_v(t_vector *v);
 ** Parsing functions
 */
 
-t_coords		left_top(t_map *map, t_token *token);
-t_coords		right_bottom(t_map *map, t_token *token);
+t_coords		left_top(t_map *map, t_token *token, char side);
+t_coords		right_bottom(t_map *map, t_token *token, char side);
 void			resize_square(t_game *game, t_coords *l_top, t_coords *r_bot);
 
 /*
 ** Scoring & Strategy Functions
 */
 
-int				move_score(t_map *map, t_token *token, t_coords *here);
-int				tile_score(t_map *map, t_coords *t);
-int				distance_score(t_map *map, t_coords *t);
+int				move_score(t_map *map, t_token *token, t_coords *here, char side);
+int				tile_score(t_map *map, t_coords *t, char side);
+int				distance_score(t_map *map, t_coords *t, char side);
 void			adjust_edge(t_map *map, t_token *token, t_coords *p);
 void			adjust_right(t_map *map, t_token *token, t_coords *p);
 void			adjust_left(t_map *map, t_token *token, t_coords *p);
@@ -213,6 +214,8 @@ void			token_to_map(t_map *map, t_token *token);
 */
 
 long double		dist_direct(t_map *map, t_coords *p);
+long double		dist_left(t_map *map, t_coords *p);
+long double		dist_right(t_map *map, t_coords *p);
 long double		ft_sqrt_prec(long double nb, int prec);
 long double		ft_m_dist(const t_coords *a, const t_coords *b);
 
@@ -270,5 +273,6 @@ void			mapdel(t_map *map);
 void			tokendel(t_token *token);
 void			get_deltas(t_token *token);
 int				abs_val(int a);
+void			token_best_reset(t_token *token);
 
 #endif

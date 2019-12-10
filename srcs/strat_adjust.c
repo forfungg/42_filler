@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 18:14:41 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/10 17:26:35 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/10 21:16:56 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	adjust_edge(t_map *map, t_token *token, t_coords *p)
 {
 	anchor_token(token, 0);
-	if (ft_m_dist(&(map->left.edge), p) > ft_m_dist(&(map->right.edge), p))
-		adjust_right(map, token, p);
-	else
+	if (token->best_right_dist < token->best_left_dist)
 		adjust_left(map, token, p);
+	else
+		adjust_right(map, token, p);
 }
 
 void	adjust_right(t_map *map, t_token *token, t_coords *p)
@@ -33,8 +33,8 @@ void	adjust_right(t_map *map, t_token *token, t_coords *p)
 	{
 		tmp.x = p->x + token->tiles[i].x;
 		tmp.y = p->y + token->tiles[i].y;
-		d_o = dist_direct(map, &(map->right.edge));
-		d_c = dist_direct(map, &tmp);
+		d_o = map-> columns < 50 ? dist_right(map, &(map->right.edge)) * angle_ratio(&(map->right.edge), &(map->right.crit), 'r') : dist_right(map, &(map->right.edge));
+		d_c = map-> columns < 50 ? dist_right(map, &tmp) * angle_ratio(&tmp, &(map->right.crit), 'r') : dist_right(map, &tmp);
 		if (d_c > d_o)
 			map->right.edge = tmp;
 		i++;
@@ -54,8 +54,8 @@ void	adjust_left(t_map *map, t_token *token, t_coords *p)
 	{
 		tmp.x = p->x + token->tiles[i].x;
 		tmp.y = p->y + token->tiles[i].y;
-		d_o = dist_direct(map, &(map->left.edge));
-		d_c = dist_direct(map, &tmp);
+		d_o = map-> columns < 50 ? dist_left(map, &(map->left.edge)) * angle_ratio(&(map->left.edge), &(map->left.crit), 'l') : dist_left(map, &(map->left.edge));
+		d_c = map-> columns < 50 ? dist_left(map, &tmp) * angle_ratio(&tmp, &(map->left.crit), 'l') : dist_left(map, &tmp);
 		if (d_c > d_o)
 			map->left.edge = tmp;
 		i++;
@@ -74,7 +74,7 @@ void	adjust_left_crit(t_map *map)
 	i.y = map->left.edge.y;
 	if ((d.x > 0 && d.y > 0) || (d.x < 0 && d.y < 0))
 	{
-		while (0 < i.x && i.x < map->columns)
+		while (0 < i.x && i.x < map->columns - 1)
 		{
 			i.x += d.x;
 			if (IS_ENEMY(map->map[i.y][i.x]))
@@ -88,7 +88,7 @@ void	adjust_left_crit(t_map *map)
 	}
 	else
 	{
-		while (0 < i.y && i.y < map->lines)
+		while (0 < i.y && i.y < map->lines - 1)
 		{
 			i.y += d.y;
 			if (IS_ENEMY(map->map[i.y][i.x]))
@@ -110,7 +110,6 @@ void	l_search_area(t_map *map, t_coords *start, t_coords *d, char side)
 	t_coords	i;
 	int			change;
 
-	ft_log("l_search start[%d, %d] | d[%d, %d] | side = '%c'\n", start->y, start->x, d->y, d->x, side);
 	change = 0;
 	i.y = start->y;
 	while (-1 < i.y && i.y < map->lines)
@@ -121,7 +120,6 @@ void	l_search_area(t_map *map, t_coords *start, t_coords *d, char side)
 			if (IS_ENEMY(map->map[i.y][i.x]))
 			{
 				change = 1;
-				ft_log("tile[%d, %d] | Current = %0.3f | i_rat = %0.3f\n",i.y,i.x, map->left.cr, angle_ratio(&(map->left.edge), &i, side));
 				if (map->left.cr > angle_ratio(&(map->left.edge), &i, side == 'w' ? 'r' : side) || map->left.cr == 0 || side == 'w')
 				{
 					map->left.crit = i;
@@ -172,7 +170,7 @@ void	adjust_right_crit(t_map *map)
 	i.y = map->right.edge.y;
 	if ((d.x > 0 && d.y < 0) || (d.x < 0 && d.y > 0))
 	{
-		while (0 < i.x && i.x < map->columns)
+		while (0 < i.x && i.x < map->columns - 1)
 		{
 			i.x += d.x;
 			if (IS_ENEMY(map->map[i.y][i.x]))
@@ -186,7 +184,7 @@ void	adjust_right_crit(t_map *map)
 	}
 	else
 	{
-		while (0 < i.y && i.y < map->lines)
+		while (0 < i.y && i.y < map->lines - 1)
 		{
 			i.y += d.y;
 			if (IS_ENEMY(map->map[i.y][i.x]))
@@ -208,7 +206,6 @@ void	r_search_area(t_map *map, t_coords *start, t_coords *d, char side)
 	t_coords	i;
 	int			change;
 
-	ft_log("r_search start[%d, %d] | d[%d, %d] | side = '%c'\n", start->y, start->x, d->y, d->x, side);
 	change = 0;
 	i.y = start->y;
 	while (-1 < i.y && i.y < map->lines)
@@ -219,7 +216,6 @@ void	r_search_area(t_map *map, t_coords *start, t_coords *d, char side)
 			if (IS_ENEMY(map->map[i.y][i.x]))
 			{
 				change = 1;
-				ft_log("tile[%d, %d] | Current = %0.3f | i_rat = %0.3f\n",i.y,i.x, map->right.cr, angle_ratio(&(map->right.edge), &i, side));
 				if (map->right.cr > angle_ratio(&(map->right.edge), &i, side == 'w' ? 'l' : side) || map->right.cr == 0 || side == 'w')
 				{
 					map->right.crit = i;

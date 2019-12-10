@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:10:46 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/10 15:52:58 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:17:51 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ void   print_map(t_map *map)
        i = 0;
        ft_log("Plateau %d %d:\n", map->lines, map->columns);
        ft_log("%*.*s\n", map->columns + 4, map->columns, str);
+	   map->map[map->left.crit.y][map->left.crit.x] = '4';
+	   map->map[map->left.edge.y][map->left.edge.x] = 'L';
+	   map->map[map->right.crit.y][map->right.crit.x] = '5';
+	   map->map[map->right.edge.y][map->right.edge.x] = 'R';
        while (i < map->lines)
        {
                ft_log("%.3d %s\n", i, map->map[i]);

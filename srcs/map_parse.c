@@ -6,58 +6,44 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 15:18:31 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/09 17:48:59 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/10 17:57:02 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-t_coords	left_top(t_map *map, t_token *token)
+t_coords	left_top(t_map *map, t_token *token, char side)
 {
 	t_coords	lt;
-	int			qd;
-
-	qd = (map->main_v.direction.x > 0 && map->main_v.direction.y > 0) ||\
-		(map->main_v.direction.x < 0 && map->main_v.direction.y < 0) ? 1 : -1;
-	if (token->h_delta > token->v_delta)
+	
+	if (side == 'r')
 	{
-		lt.x = qd == 1 ? map->left.edge.x - token->columns :\
-			map->right.edge.x - token->columns;
-		lt.y = qd == 1 ? map->left.edge.y - token->lines :\
-			map->right.edge.y - token->lines;
+		lt.x = map->right.edge.x - token->columns;
+		lt.y = map->right.edge.y - token->lines;
 	}
 	else
 	{
-		lt.x = qd == -1 ? map->left.edge.x - token->columns :\
-			map->right.edge.x - token->columns;
-		lt.y = qd == -1 ? map->left.edge.y - token->lines :\
-			map->right.edge.y - token->lines;
+		lt.x = map->left.edge.x - token->columns;
+		lt.y = map->left.edge.y - token->lines;
 	}
 	lt.x < 0 ? lt.x = 0 : 0;
 	lt.y < 0 ? lt.y = 0 : 0;
 	return (lt);
 }
 
-t_coords	right_bottom(t_map *map, t_token *token)
+t_coords	right_bottom(t_map *map, t_token *token, char side)
 {
 	t_coords	rb;
-	int			qd;
 
-	qd = (map->main_v.direction.x > 0 && map->main_v.direction.y > 0) ||\
-		(map->main_v.direction.x < 0 && map->main_v.direction.y < 0) ? 1 : -1;
-	if (token->h_delta > token->v_delta)
+	if (side == 'r')
 	{
-		rb.x = qd == 1 ? map->left.edge.x + token->columns :\
-			map->right.edge.x + token->columns;
-		rb.y = qd == 1 ? map->left.edge.y + token->lines :\
-			map->right.edge.y + token->lines;
+		rb.x = map->right.edge.x + token->columns;
+		rb.y = map->right.edge.y + token->lines;
 	}
 	else
 	{
-		rb.x = qd == -1 ? map->left.edge.x + token->columns :\
-			map->right.edge.x + token->columns;
-		rb.y = qd == -1 ? map->left.edge.y + token->lines :\
-			map->right.edge.y + token->lines;
+		rb.x = map->left.edge.x + token->columns;
+		rb.y = map->left.edge.y + token->lines;
 	}
 	rb.x >= map->columns ? rb.x = map->columns - 1 : 0;
 	rb.y >= map->lines ? rb.y = map->lines - 1 : 0;

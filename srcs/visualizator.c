@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 15:15:14 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/10 16:48:50 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/10 20:05:58 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	enemy_turn(t_map *map, t_brd *board, int t)
 {
 	char	*who;
 
-	if (!t)
+	if (!t && map->en_score > 0)
 	{
 		game_over_show(board);
 		if (map->my_score > map->en_score)

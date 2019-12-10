@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:45:30 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/09 18:51:58 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:02:24 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,19 @@ void	transcribe_token(t_token *token)
 		i.y++;
 	}
 	anchor_token(token, 0);
-	get_deltas(token);
+	token_best_reset(token);
+}
+
+void	token_best_reset(t_token *token)
+{
 	token->best.x = -1;
 	token->best.y = -1;
-	token->best_dist = -1;
+	token->best_left.x = -1;
+	token->best_left.y = -1;
+	token->best_left_dist = -10000000;
+	token->best_right.x = -1;
+	token->best_right.y = -1;
+	token->best_right_dist = -10000000;
 }
 
 void	init_tiles(t_token *token)

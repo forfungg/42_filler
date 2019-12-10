@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 09:31:19 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/10 15:18:48 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:03:10 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,29 +43,6 @@ t_coords	get_direction(t_coords *start, t_coords *point)
 	direction.x = start->x - point->x;
 	direction.y = start->y - point->y;
 	return (direction);
-}
-
-void		get_deltas(t_token *token)
-{
-	int i;
-	int j;
-
-	token->v_delta = 0;
-	token->h_delta = 0;
-	i = 0;
-	while (i < token->cnt_tiles)
-	{
-		j = i + 1;
-		while (j < token->cnt_tiles)
-		{
-			if (token->tiles[j].x - token->tiles[i].x > token->h_delta)
-				token->h_delta = token->tiles[j].x - token->tiles[i].x;
-			if (token->tiles[j].y - token->tiles[i].y > token->v_delta)
-				token->v_delta = token->tiles[j].y - token->tiles[i].y;
-			j++;
-		}
-		i++;
-	}
 }
 
 int			is_zero_v(t_vector *v)
