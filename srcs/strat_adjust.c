@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 18:14:41 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/11 12:06:31 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 17:46:50 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	adjust_edge(t_map *map, t_token *token, t_coords *p)
 	else
 		adjust_right(map, token, p);
 	adjust_edge_strat(map, token, p);
+	check_surround(map);
 }
 
 void	adjust_right(t_map *map, t_token *token, t_coords *p)
@@ -34,8 +35,6 @@ void	adjust_right(t_map *map, t_token *token, t_coords *p)
 	{
 		tmp.x = p->x + token->tiles[i].x;
 		tmp.y = p->y + token->tiles[i].y;
-		// d_o = dist_right(map, &(map->right.edge));
-		// d_c = dist_right(map, &tmp);
 		d_o = dist_right(map, &(map->right.edge)) * angle_ratio(&(map->right.edge), &(map->right.crit), 'r');
 		d_c = dist_right(map, &tmp) * angle_ratio(&tmp, &(map->right.crit), 'r');
 		if (d_c > d_o)
@@ -59,8 +58,6 @@ void	adjust_left(t_map *map, t_token *token, t_coords *p)
 	{
 		tmp.x = p->x + token->tiles[i].x;
 		tmp.y = p->y + token->tiles[i].y;
-		// d_o = dist_left(map, &(map->left.edge));
-		// d_c = dist_left(map, &tmp);
 		d_o = dist_left(map, &(map->left.edge)) * angle_ratio(&(map->left.edge), &(map->left.crit), 'l');
 		d_c = dist_left(map, &tmp) * angle_ratio(&tmp, &(map->left.crit), 'l');
 		if (d_c > d_o)

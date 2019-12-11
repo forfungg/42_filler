@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/11 12:47:03 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 17:48:32 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,8 +208,11 @@ void			find_place_edge(t_game *game, t_coords *i);
 long double		dist_edge(t_map *map, t_coords *p);
 void			set_edge_strat(t_map *map);
 void			adjust_edge_strat(t_map *map, t_token *token, t_coords *p);
+void			find_new_edge(t_map *map);
 void			reset_branch(t_map *map, char branch);
 void			set_captured(t_map *map);
+void			check_surround(t_map *map);
+int				is_surround(t_map *map, t_coords *tile);
 
 /*
 **	Print Functions

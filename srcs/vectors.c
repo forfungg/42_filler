@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 09:31:19 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/11 12:47:35 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 16:41:36 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void		main_vector(t_map *map)
 	map->left.cr = angle_ratio(&enemy, &mine, 'r');
 	map->main_v.start = mine;
 	map->main_v.direction = get_direction(&mine, &enemy);
+	ft_bzero(&(map->corner), sizeof(t_corners));
 	map->edge.edge = mine;
 	set_edge_strat(map);
 }
@@ -57,6 +58,7 @@ int			is_zero_v(t_vector *v)
 
 void	set_edge_strat(t_map *map)
 {
+	ft_log("@set_edge_strat\n");
 	map->edge.crit = ft_near_corner_0(map, &(map->edge.edge));
 	if (map->edge.crit.x == -1 || map->edge.crit.y == -1)
 	{

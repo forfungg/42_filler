@@ -6,7 +6,7 @@
 #    By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 18:30:20 by jnovotny          #+#    #+#              #
-#    Updated: 2019/12/11 11:33:21 by jnovotny         ###   ########.fr        #
+#    Updated: 2019/12/11 17:46:10 by jnovotny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,9 @@ NAME = jnovotny.filler
 LIB = ../printf/libftprintf.a
 
 FTS =	calculus_tools.c \
+		corners.c\
 		datafeed.c \
+		e_points.c \
 		edge_strat.c \
 		error.c \
 		fetch_data.c \
