@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 10:22:41 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/10 19:50:09 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 11:27:06 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	place_token(t_game *game)
 {
 	t_coords here;
+	int best;
 
 	if (is_zero_v(&(game->map.main_v)))
 		main_vector(&(game->map));
@@ -23,8 +24,21 @@ void	place_token(t_game *game)
 	ft_log_status(&(game->map), &(game->token));
 	find_place(game, &here, 'r');
 	find_place(game, &here, 'l');
-	game->token.best = game->token.best_left_dist > game->token.best_right_dist ? game->token.best_left : game->token.best_right;
-	ft_log("left %d @[%d, %d] | right %d @[%d, %d] | res[%d, %d]\n", game->token.best_left_dist, game->token.best_left.y, game->token.best_left.x, game->token.best_right_dist, game->token.best_right.y, game->token.best_right.x, game->token.best.y, game->token.best.x);
+	find_place_edge(game, &here);
+	if (game->token.best_left_dist > game->token.best_right_dist)
+		best = game->token.best_left_dist;
+	else
+		best = game->token.best_right_dist;
+	if (game->token.best_edge_dist > best)
+		best = game->token.best_edge_dist;
+	if (best == game->token.best_left_dist)
+		game->token.best = game->token.best_left;
+	else if (best == game->token.best_right_dist)
+		game->token.best = game->token.best_right;
+	else
+	 	game->token.best = game->token.best_edge;
+	// game->token.best = game->token.best_left_dist > game->token.best_right_dist ? game->token.best_left : game->token.best_right;
+	ft_log("left %d @[%d, %d] | right %d @[%d, %d] | edge %d @[%d, %d] | res[%d, %d]\n", game->token.best_left_dist, game->token.best_left.y, game->token.best_left.x, game->token.best_right_dist, game->token.best_right.y, game->token.best_right.x,game->token.best_edge_dist, game->token.best_edge.y, game->token.best_edge.x, game->token.best.y, game->token.best.x);
 	here = game->token.best;
 	adjust_edge(&(game->map), &(game->token), &here);
 	ft_log("Pre-adjust coords: %dx%d\n", here.y, here.x);
@@ -122,4 +136,11 @@ void	asses_position(t_map *map, t_token *token, t_coords *here, char side)
 		token->best_left.x = here->x + token->tiles[0].x;
 		token->best_left.y = here->y + token->tiles[0].y;
 	}
+	else if (side == 'e' && dist > token->best_edge_dist)
+	{
+		token->best_edge_dist = dist;
+		token->best_edge.x = here->x + token->tiles[0].x;
+		token->best_edge.y = here->y + token->tiles[0].y;
+	}
+	
 }

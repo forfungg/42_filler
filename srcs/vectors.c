@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 09:31:19 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/11 10:10:59 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 12:47:35 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		main_vector(t_map *map)
 	map->main_v.start = mine;
 	map->main_v.direction = get_direction(&mine, &enemy);
 	map->edge.edge = mine;
-	// set_edge_strat(map);
+	set_edge_strat(map);
 }
 
 t_coords	get_direction(t_coords *start, t_coords *point)
@@ -57,21 +57,10 @@ int			is_zero_v(t_vector *v)
 
 void	set_edge_strat(t_map *map)
 {
-	t_coords tmp;
-
-	map->edge.crit.x = 0;
-	map->edge.crit.y = 0;
-	map->edge.cr = (double)ft_m_dist(&(map->edge.edge), &(map->edge.crit));
-	tmp.x = map->columns - 1;
-	tmp.y = 0;
-	if ((double)ft_m_dist(&(map->edge.edge), &tmp) <  map->edge.cr)
-		map->edge.crit = tmp;
-	tmp.x = map->columns - 1;
-	tmp.y = map->lines - 1;
-	if ((double)ft_m_dist(&(map->edge.edge), &tmp) <  map->edge.cr)
-		map->edge.crit = tmp;
-	tmp.x = 0;
-	tmp.y = map->lines - 1;
-	if ((double)ft_m_dist(&(map->edge.edge), &tmp) <  map->edge.cr)
-		map->edge.crit = tmp;
+	map->edge.crit = ft_near_corner_0(map, &(map->edge.edge));
+	if (map->edge.crit.x == -1 || map->edge.crit.y == -1)
+	{
+		map->edge.edge = map->right.cr > map->left.cr ? map->left.edge : map->right.edge;
+		ft_near_corner(map, &(map->edge.edge));
+	}
 }

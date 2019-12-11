@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/11 09:59:23 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 12:47:03 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ typedef struct	s_strat_branch
 	double		cr;
 }				t_branch;
 
-typedef struct	s_scoretab
+typedef struct	s_corners
 {
-	t_coords	anchor;
-	int			lines;
-	int			columns;
-	int			score;
-}				t_scoretab;
+	int			lt;
+	int			rt;
+	int			lb;
+	int			rb;
+}				t_corners;
 
 typedef struct	s_board_img
 {
@@ -136,6 +136,7 @@ typedef struct	s_map
 	t_branch	right;
 	t_branch	left;
 	t_branch	edge;
+	t_corners	corner;
 }				t_map;
 
 typedef struct	s_game
@@ -203,6 +204,12 @@ void			adjust_right_crit(t_map *map);
 void			l_search_area(t_map *map, t_coords *start, t_coords *d, char side);
 void			r_search_area(t_map *map, t_coords *start, t_coords *d, char side);
 double			angle_ratio(t_coords *a, t_coords *b, char side);
+void			find_place_edge(t_game *game, t_coords *i);
+long double		dist_edge(t_map *map, t_coords *p);
+void			set_edge_strat(t_map *map);
+void			adjust_edge_strat(t_map *map, t_token *token, t_coords *p);
+void			reset_branch(t_map *map, char branch);
+void			set_captured(t_map *map);
 
 /*
 **	Print Functions
@@ -221,6 +228,8 @@ long double		dist_left(t_map *map, t_coords *p);
 long double		dist_right(t_map *map, t_coords *p);
 long double		ft_sqrt_prec(long double nb, int prec);
 long double		ft_m_dist(const t_coords *a, const t_coords *b);
+t_coords		ft_near_corner(t_map *map, t_coords *p);
+t_coords		ft_near_corner_0(t_map *map, t_coords *p);
 
 /*
 ** Visual

@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 18:14:41 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/11 10:37:10 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 12:06:31 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	adjust_edge(t_map *map, t_token *token, t_coords *p)
 		adjust_left(map, token, p);
 	else
 		adjust_right(map, token, p);
+	adjust_edge_strat(map, token, p);
 }
 
 void	adjust_right(t_map *map, t_token *token, t_coords *p)
@@ -41,6 +42,8 @@ void	adjust_right(t_map *map, t_token *token, t_coords *p)
 			map->right.edge = tmp;
 		i++;
 	}
+	if (ft_m_dist(&(map->right.edge), &(map->right.crit)) < 1.1)
+		reset_branch(map, 'r');
 	map->right.cr = angle_ratio(&(map->right.crit), &(map->right.edge), 'l');
 }
 
@@ -64,6 +67,8 @@ void	adjust_left(t_map *map, t_token *token, t_coords *p)
 			map->left.edge = tmp;
 		i++;
 	}
+	if (ft_m_dist(&(map->left.edge), &(map->left.crit)) < 1.1)
+		reset_branch(map, 'l');
 	map->left.cr = angle_ratio(&(map->left.crit), &(map->left.edge), 'r');
 }
 

@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 17:30:33 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/11 10:17:23 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 10:58:35 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int		distance_score(t_map *map, t_coords *t, char side)
 		res = (int)(dist_right(map, t));
 	else if (side == 'l')
 		res = (int)(dist_left(map, t));
+	else if (side == 'e')
+		res = (int)(dist_edge(map, t));
 	// if (side == 'r')
 	// 	res = map-> columns < 50 ? (int)(dist_right(map, t) * 10 * angle_ratio(&(map->right.edge), t, 'r')) : (int)(dist_right(map, t) * 10);
 	// else if (side == 'l')

@@ -6,7 +6,7 @@
 #    By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 18:30:20 by jnovotny          #+#    #+#              #
-#    Updated: 2019/12/10 15:04:11 by jnovotny         ###   ########.fr        #
+#    Updated: 2019/12/11 11:33:21 by jnovotny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ LIB = ../printf/libftprintf.a
 
 FTS =	calculus_tools.c \
 		datafeed.c \
+		edge_strat.c \
 		error.c \
 		fetch_data.c \
 		ft_sqrt_prec.c \
