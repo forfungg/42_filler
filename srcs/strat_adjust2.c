@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 18:14:41 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/11 19:15:01 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 19:45:34 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ double	angle_ratio(t_coords *a, t_coords *b, char side)
 		return (d_x != 0 ? d_y / d_x : 0);
 	else
 		return (d_y != 0 ? d_x / d_y : 0);
-
 }
 
 void	adjust_right_crit(t_map *map)
@@ -55,31 +54,13 @@ void	adjust_right_crit(t_map *map)
 	i.y = map->right.edge.y;
 	if ((d.x > 0 && d.y < 0) || (d.x < 0 && d.y > 0))
 	{
-		while (0 < i.x && i.x < map->columns - 1)
-		{
-			i.x += d.x;
-			if (IS_ENEMY(map->map[i.y][i.x]))
-			{
-				d.x *= -1;
-				d.y *= -1;
-				r_search_area(map, &i, &d, 'r');
-				return ;
-			}
-		}
+		if (adj_rc_1(map, &i, &d))
+			return ;
 	}
 	else
 	{
-		while (0 < i.y && i.y < map->lines - 1)
-		{
-			i.y += d.y;
-			if (IS_ENEMY(map->map[i.y][i.x]))
-			{
-				d.x *= -1;
-				d.y *= -1;
-				r_search_area(map, &i, &d, 'r');
-				return ;
-			}
-		}
+		if (adj_rc_2(map, &i, &d))
+			return ;
 	}
 	i.x = map->right.edge.x;
 	i.y = map->right.edge.y;
@@ -88,38 +69,17 @@ void	adjust_right_crit(t_map *map)
 
 void	r_search_area(t_map *map, t_coords *start, t_coords *d, char side)
 {
-	t_coords	i;
 	int			change;
 
-	change = 0;
-	i.y = start->y;
-	while (-1 < i.y && i.y < map->lines)
-	{
-		i.x = start->x;
-		while (-1 < i.x && i.x < map->columns)
-		{
-			if (IS_ENEMY(map->map[i.y][i.x]))
-			{
-				change = 1;
-				if (map->right.cr > angle_ratio(&(map->right.edge), &i, side == 'w' ? 'l' : side) || map->right.cr == 0 || side == 'w')
-				{
-					map->right.crit = i;
-					map->right.cr = angle_ratio(&(map->right.edge), &i, side == 'w' ? 'l' : side);
-					if (side == 'w')
-						return ;
-					start->x = i.x;
-					start->y = i.y;
-				}
-			}
-			i.x += d->x;
-		}
-		i.y += d->y;
-	}
+	change = r_search_area2(map, start, d, side);
 	if (!change)
 	{
-		map->right.crit.x = i.x < 0 ? i.x + 1 : i.x - 1;
-		map->right.crit.y = i.y < 0 ? i.y + 1 : i.y - 1;
-		map->right.cr = angle_ratio(&(map->right.edge), &(map->right.crit), side);
+		map->right.crit.x = map->left.i.x < 0 ? map->left.i.x + 1 :\
+			map->left.i.x - 1;
+		map->right.crit.y = map->left.i.y < 0 ? map->left.i.y + 1 :\
+			map->left.i.y - 1;
+		map->right.cr = angle_ratio(&(map->right.edge),\
+			&(map->right.crit), side);
 		d->x *= -1;
 		d->y *= -1;
 		r_search_area(map, &(map->right.crit), d, 'w');

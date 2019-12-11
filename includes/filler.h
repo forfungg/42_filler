@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/11 19:15:50 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 19:57:30 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@
 # define G_M_COLUMNS game->map.columns
 # define G_T_LINES game->token.lines
 # define G_T_COLUMNS game->token.columns
+# define GTBR_X game->token.best_right.x
+# define GTBR_Y game->token.best_right.y
+# define GTBL_X game->token.best_left.x
+# define GTBL_Y game->token.best_left.y
 
 typedef struct	s_coords
 {
@@ -166,13 +170,15 @@ void			init_tiles(t_token *token);
 
 void			place_token(t_game *game);
 void			find_place(t_game *game, t_coords *i, char side);
-int				check_place(t_map *map, t_token *token, t_coords *here, char side);
+int				check_place(t_map *map, t_token *token, t_coords *here,\
+					char side);
 int				is_fit(t_map *map, t_token *token, t_coords *here);
 void			ft_middle(t_map *map, t_coords *center);
 void			find_mine(t_map *map, t_coords *mine);
 void			find_enemy(t_map *map, t_coords *enemy);
 int				player_distance(t_map *map);
-void			asses_position(t_map *map, t_token *token, t_coords *here, char side);
+void			asses_position(t_map *map, t_token *token, t_coords *here,\
+					char side);
 
 /*
 **	Vectors
@@ -194,7 +200,8 @@ void			resize_square(t_game *game, t_coords *l_top, t_coords *r_bot);
 ** Scoring & Strategy Functions
 */
 
-int				move_score(t_map *map, t_token *token, t_coords *here, char side);
+int				move_score(t_map *map, t_token *token, t_coords *here,\
+					char side);
 int				tile_score(t_map *map, t_coords *t, char side);
 int				distance_score(t_map *map, t_coords *t, char side);
 void			adjust_edge(t_map *map, t_token *token, t_coords *p);
@@ -202,9 +209,14 @@ void			adjust_right(t_map *map, t_token *token, t_coords *p);
 void			adjust_left(t_map *map, t_token *token, t_coords *p);
 void			adjust_left_crit(t_map *map);
 void			adjust_right_crit(t_map *map);
-void			l_search_area(t_map *map, t_coords *start, t_coords *d, char side);
-int				l_search_area2(t_map *map, t_coords *start, t_coords *d, char s);
-void			r_search_area(t_map *map, t_coords *start, t_coords *d, char side);
+void			l_search_area(t_map *map, t_coords *start, t_coords *d,\
+					char side);
+int				l_search_area2(t_map *map, t_coords *start, t_coords *d,\
+					char s);
+void			r_search_area(t_map *map, t_coords *start, t_coords *d,\
+					char side);
+int				r_search_area2(t_map *map, t_coords *start, t_coords *d,\
+					char s);
 double			angle_ratio(t_coords *a, t_coords *b, char side);
 void			find_place_edge(t_game *game, t_coords *i);
 long double		dist_edge(t_map *map, t_coords *p);
@@ -218,6 +230,8 @@ int				is_surround(t_map *map, t_coords *tile);
 void			select_best(t_token *token, t_coords *here);
 int				adj_lc_1(t_map *map, t_coords *i, t_coords *d);
 int				adj_lc_2(t_map *map, t_coords *i, t_coords *d);
+int				adj_rc_1(t_map *map, t_coords *i, t_coords *d);
+int				adj_rc_2(t_map *map, t_coords *i, t_coords *d);
 
 /*
 **	Print Functions

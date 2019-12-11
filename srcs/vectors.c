@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 09:31:19 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/11 18:27:50 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 19:46:21 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,13 @@ int			is_zero_v(t_vector *v)
 	return (0);
 }
 
-void	set_edge_strat(t_map *map)
+void		set_edge_strat(t_map *map)
 {
 	map->edge.crit = ft_near_corner_0(map, &(map->edge.edge));
 	if (map->edge.crit.x == -1 || map->edge.crit.y == -1)
 	{
-		map->edge.edge = map->right.cr > map->left.cr ? map->left.edge : map->right.edge;
+		map->edge.edge = map->right.cr > map->left.cr ?\
+			map->left.edge : map->right.edge;
 		ft_near_corner(map, &(map->edge.edge));
 	}
 }

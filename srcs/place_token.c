@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 10:22:41 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/11 18:25:10 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 20:08:57 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@ void	place_token(t_game *game)
 		main_vector(&(game->map));
 	adjust_left_crit(&(game->map));
 	adjust_right_crit(&(game->map));
-	find_place(game, &here, 'r');
-	find_place(game, &here, 'l');
+	if (game->map.columns > 20 && game->map.lines > 20)
+	{
+		find_place(game, &here, 'r');
+		find_place(game, &here, 'l');
+	}
 	find_place_edge(game, &here);
 	select_best(&(game->token), &here);
 	adjust_edge(&(game->map), &(game->token), &here);
@@ -56,11 +59,8 @@ void	find_place(t_game *game, t_coords *i, char side)
 			}
 			i->y++;
 		}
-		if (side == 'r' && (game->token.best_right.x < 0 ||\
-			game->token.best_right.y < 0))
-			resize_square(game, &l_top, &r_bot);
-		else if (side == 'l' && (game->token.best_left.x < 0 ||\
-			game->token.best_left.y < 0))
+		if ((side == 'r' && (GTBR_X < 0 || GTBR_Y < 0)) ||\
+			(side == 'l' && (GTBL_X < 0 || GTBL_Y < 0)))
 			resize_square(game, &l_top, &r_bot);
 		else
 			return ;
@@ -123,5 +123,4 @@ void	asses_position(t_map *map, t_token *token, t_coords *here, char side)
 		token->best_edge.x = here->x + token->tiles[0].x;
 		token->best_edge.y = here->y + token->tiles[0].y;
 	}
-	
 }
