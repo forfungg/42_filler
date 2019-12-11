@@ -6,7 +6,7 @@
 #    By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 18:30:20 by jnovotny          #+#    #+#              #
-#    Updated: 2019/12/11 20:33:29 by jnovotny         ###   ########.fr        #
+#    Updated: 2019/12/11 20:40:29 by jnovotny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ C_RES = \033[0m
 
 NAME = jnovotny.filler
 
-LIB = ./libft/libftprintf.a
+LIB = ./Libft/libftprintf.a
 
 FTS =	calculus_tools.c \
 		corners.c\
@@ -53,7 +53,7 @@ FTS =	calculus_tools.c \
 
 FTO = $(FTS.c=.o)
 
-LIB_I = ./libft/includes/
+LIB_I = ./Libft/includes/
 
 I_DIR = ./includes/
 S_DIR = ./srcs/
@@ -70,19 +70,19 @@ GRAPHIC = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -fram
 all: $(NAME)
 
 libft:
-	@make -C ./libft
+	@make -C ./Libft
 
 $(NAME): libft
 	@gcc -o $(NAME) $(CFLAGS) -I$(I_DIR) -I$(LIB_I) $(LIB) $(GRAPHIC) $(SRCS)
 	@echo "$(C_GREEN)[$(C_BLUE)$(NAME)$(C_GREEN) was compiled]$(C_RES)"
 
 clean:
-	@make clean -C ./libft
+	@make clean -C ./Libft
 	@/bin/rm -rf $(O_DIR)
 	@echo "$(C_RED)[Objects deleted!]$(C_RES)"
 
 fclean: clean
-	@make fclean -C ./libft
+	@make fclean -C ./Libft
 	@/bin/rm -f $(NAME)
 	@echo "$(C_RED)[Removed $(NAME)]$(C_RES)"
 
