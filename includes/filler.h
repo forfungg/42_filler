@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/11 17:48:32 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 19:15:50 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct	s_strat_branch
 	t_coords	edge;
 	t_coords	crit;
 	double		cr;
+	t_coords	i;
 }				t_branch;
 
 typedef struct	s_corners
@@ -202,6 +203,7 @@ void			adjust_left(t_map *map, t_token *token, t_coords *p);
 void			adjust_left_crit(t_map *map);
 void			adjust_right_crit(t_map *map);
 void			l_search_area(t_map *map, t_coords *start, t_coords *d, char side);
+int				l_search_area2(t_map *map, t_coords *start, t_coords *d, char s);
 void			r_search_area(t_map *map, t_coords *start, t_coords *d, char side);
 double			angle_ratio(t_coords *a, t_coords *b, char side);
 void			find_place_edge(t_game *game, t_coords *i);
@@ -213,6 +215,9 @@ void			reset_branch(t_map *map, char branch);
 void			set_captured(t_map *map);
 void			check_surround(t_map *map);
 int				is_surround(t_map *map, t_coords *tile);
+void			select_best(t_token *token, t_coords *here);
+int				adj_lc_1(t_map *map, t_coords *i, t_coords *d);
+int				adj_lc_2(t_map *map, t_coords *i, t_coords *d);
 
 /*
 **	Print Functions
@@ -232,7 +237,9 @@ long double		dist_right(t_map *map, t_coords *p);
 long double		ft_sqrt_prec(long double nb, int prec);
 long double		ft_m_dist(const t_coords *a, const t_coords *b);
 t_coords		ft_near_corner(t_map *map, t_coords *p);
+t_coords		ft_near_corner2(t_map *map, t_coords *p, t_coords *best);
 t_coords		ft_near_corner_0(t_map *map, t_coords *p);
+t_coords		ft_near_corner_02(t_map *map, t_coords *p, t_coords *best);
 
 /*
 ** Visual

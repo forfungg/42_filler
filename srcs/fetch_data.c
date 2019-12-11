@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:45:30 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/09 18:53:45 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 18:26:49 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,9 @@ void	fetch_token(t_token *token)
 	{
 		get_next_line(0, &str);
 		token->map[i] = ft_strdup(str);
-		ft_log("%s\n", str);
 		if ((int)ft_strlen(token->map[i]) != token->columns)
 			filler_error("Token line lenght error");
 		i++;
 	}
-	ft_log("\n");
 	transcribe_token(token);
 }

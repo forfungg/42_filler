@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 10:10:46 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/11 16:58:41 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 18:26:22 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void			find_new_edge(t_map *map)
 {
 	t_coords	i;
 
-	ft_log("@find_new_edge\n");
 	i.y = map->lines / 2 - map->lines / 5;
 	while (0 < i.y && i.y < map->lines - 1)
 	{
@@ -92,7 +91,6 @@ void			find_new_edge(t_map *map)
 			i.x++;
 			if (IS_MINE(map->map[i.y][i.x]))
 			{
-				ft_log("i[%d, %d]\n", i.y, i.x);
 				map->edge.edge.x = i.x;
 				map->edge.edge.y = i.y;
 				set_edge_strat(map);
@@ -122,5 +120,4 @@ void			set_captured(t_map *map)
 	else if ((p.x == map->columns - 1 && p.y >= map->lines / 2) ||\
 		(p.y == map->lines - 1 && p.x >= map->columns / 2))
 		map->corner.rb = 1;
-	ft_log("@set_corners: lt = %d | rt = %d | lb = %d | rb = %d\n", map->corner.lt, map->corner.rt, map->corner.lb, map->corner.rb);
 }

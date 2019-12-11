@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:45:30 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/11 11:17:55 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 18:26:08 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int		feed_data(t_game *game)
 	if (ft_strnequ(str, "Plateau", 7))
 	{
 		fetch_mapsize(&(game->map), str);
-		ft_log("Map dimensions: %d %d\n", G_M_LINES, G_M_COLUMNS);
 		if (G_B_LINES != G_M_LINES || G_B_COLUMNS != G_M_COLUMNS)
 			init_board(&(game->map), &(game->board));
 		fetch_map(&(game->map));
@@ -29,7 +28,6 @@ int		feed_data(t_game *game)
 	else if (ft_strnequ(str, "Piece", 5))
 	{
 		fetch_tokensize(&(game->token), str);
-		ft_log("Token dimensions: %d %d\n", G_T_LINES, G_T_COLUMNS);
 		fetch_token(&(game->token));
 		place_token(game);
 	}

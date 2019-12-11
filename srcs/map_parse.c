@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 15:18:31 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/11 10:56:21 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 18:27:19 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_coords	left_top(t_map *map, t_token *token, char side)
 {
 	t_coords	lt;
-	
+
 	if (side == 'r')
 	{
 		lt.x = map->right.edge.x - token->columns;
@@ -31,7 +31,6 @@ t_coords	left_top(t_map *map, t_token *token, char side)
 		lt.x = map->edge.edge.x - token->columns;
 		lt.y = map->edge.edge.y - token->lines;
 	}
-	
 	lt.x < 0 ? lt.x = 0 : 0;
 	lt.y < 0 ? lt.y = 0 : 0;
 	return (lt);
@@ -72,6 +71,4 @@ void		resize_square(t_game *game, t_coords *l_top, t_coords *r_bot)
 		game->map.columns - 1;
 	r_bot->y = r_bot->y < game->map.lines - 1 ? r_bot->y + 1 :\
 		game->map.lines - 1;
-	ft_log("Map of interest resized (%d x %d)\n",\
-		r_bot->y - l_top->y, r_bot->x - l_top->x);
 }

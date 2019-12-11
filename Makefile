@@ -6,7 +6,7 @@
 #    By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 18:30:20 by jnovotny          #+#    #+#              #
-#    Updated: 2019/12/11 17:46:10 by jnovotny         ###   ########.fr        #
+#    Updated: 2019/12/11 19:15:29 by jnovotny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,6 @@ FTS =	calculus_tools.c \
 		ft_sqrt_prec.c \
 		gg_img.c \
 		gg_img2.c \
-		logger.c \
 		main.c \
 		map_parse.c \
 		mlx_control.c \
@@ -41,6 +40,9 @@ FTS =	calculus_tools.c \
 		printer.c \
 		scoring.c \
 		strat_adjust.c \
+		strat_adjust2.c \
+		strat_supp.c \
+		str_supp2.c \
 		tools.c \
 		tools2.c \
 		vectors.c \
