@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 10:56:40 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/10 20:47:16 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 10:29:20 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,50 +39,59 @@ long double		dist_right(t_map *map, t_coords *p)
 {
 	long double a;
 	long double b;
-	t_coords	d;
-	t_coords	qd;
+	// t_coords	d;
+	// t_coords	qd;
 
-	qd.x = map->right.edge.x - map->right.crit.x > 0 ? 1 : -1;
-	qd.y = map->right.edge.y - map->right.crit.y > 0 ? 1 : -1;
-	if (p->x == map->right.edge.x && p->y == map->right.edge.y)
-		return ((long double)0);
-	d.x = p->x * 10;
-	d.y = p->y * 10;
-	a = ft_m_dist(&(map->right.edge), &d);
-	b = ft_sqrt_prec(a * a * 2, 5) / 2;
-	d.x = map->right.edge.x - p->x > 0 ? 1 : -1;
-	d.y = map->right.edge.y - p->y > 0 ? 1 : -1;
-	if (qd.x == d.x && qd.y == d.y)
-		return (2 * ft_sqrt_prec(a * a + b * b, 5));
-	else if (qd.x != d.x && qd.y != d.y)
-		return (-1 * ft_sqrt_prec(a * a + b * b, 5));
-	else
-		return (0.5 * ft_sqrt_prec(a * a + b * b, 5));
+	// qd.x = map->right.edge.x - map->right.crit.x > 0 ? 1 : -1;
+	// qd.y = map->right.edge.y - map->right.crit.y > 0 ? 1 : -1;
+	// if (p->x == map->right.edge.x && p->y == map->right.edge.y)
+	// 	return ((long double)0);
+	// d.x = p->x * 10;
+	// d.y = p->y * 10;
+	// a = ft_m_dist(&(map->right.edge), &d);
+	// b = ft_sqrt_prec(a * a * 2, 5) / 2;
+	// d.x = map->right.edge.x - p->x > 0 ? 1 : -1;
+	// d.y = map->right.edge.y - p->y > 0 ? 1 : -1;
+	// if (qd.x == d.x && qd.y == d.y)
+	// 	return (2 * ft_sqrt_prec(a * a + b * b, 5));
+	// else if (qd.x != d.x && qd.y != d.y)
+	// 	return (-1 * ft_sqrt_prec(a * a + b * b, 5));
+	// else
+	// 	return (0.5 * ft_sqrt_prec(a * a + b * b, 5));
+	a = ft_m_dist(p, &(map->right.crit));
+	b = ft_m_dist(&(map->right.edge), &(map->right.crit));
+
+	return (100 * (b - a));
 }
 
 long double		dist_left(t_map *map, t_coords *p)
 {
 	long double a;
 	long double b;
-	t_coords	d;
-	t_coords	qd;
+	// t_coords	d;
+	// t_coords	qd;
 
-	qd.x = map->left.edge.x - map->left.crit.x > 0 ? 1 : -1;
-	qd.y = map->left.edge.y - map->left.crit.y > 0 ? 1 : -1;
-	if (p->x == map->left.edge.x && p->y == map->left.edge.y)
-		return ((long double)0);
-	d.x = p->x * 10;
-	d.y = p->y * 10;
-	a = ft_m_dist(&(map->left.edge), &d);
-	b = ft_sqrt_prec(a * a * 2, 5) / 2;
-	d.x = map->left.edge.x - p->x > 0 ? 1 : -1;
-	d.y = map->left.edge.y - p->y > 0 ? 1 : -1;
-	if (qd.x == d.x && qd.y == d.y)
-		return (2 * ft_sqrt_prec(a * a + b * b, 5));
-	else if (qd.x != d.x && qd.y != d.y)
-		return (-1 * ft_sqrt_prec(a * a + b * b, 5));
-	else
-		return (0.5 * ft_sqrt_prec(a * a + b * b, 5));
+	// qd.x = map->left.edge.x - map->left.crit.x > 0 ? 1 : -1;
+	// qd.y = map->left.edge.y - map->left.crit.y > 0 ? 1 : -1;
+	// if (p->x == map->left.edge.x && p->y == map->left.edge.y)
+	// 	return ((long double)0);
+	// d.x = p->x * 10;
+	// d.y = p->y * 10;
+	// a = ft_m_dist(&(map->left.edge), &d);
+	// b = ft_sqrt_prec(a * a * 2, 5) / 2;
+	// d.x = map->left.edge.x - p->x > 0 ? 1 : -1;
+	// d.y = map->left.edge.y - p->y > 0 ? 1 : -1;
+	// if (qd.x == d.x && qd.y == d.y)
+	// 	return (2 * ft_sqrt_prec(a * a + b * b, 5));
+	// else if (qd.x != d.x && qd.y != d.y)
+	// 	return (-1 * ft_sqrt_prec(a * a + b * b, 5));
+	// else
+	// 	return (0.5 * ft_sqrt_prec(a * a + b * b, 5));
+
+	a = ft_m_dist(p, &(map->left.crit));
+	b = ft_m_dist(&(map->left.edge), &(map->left.crit));
+
+	return (100 * (b - a));
 }
 
 long double		ft_m_dist(const t_coords *a, const t_coords *b)

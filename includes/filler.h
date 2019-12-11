@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 13:37:02 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/10 19:02:46 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 09:59:23 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,10 @@ typedef struct	s_token
 	t_coords	*tiles;
 	t_coords	best_left;
 	t_coords	best_right;
+	t_coords	best_edge;
 	int			best_left_dist;
 	int			best_right_dist;
+	int			best_edge_dist;
 	t_coords	best;
 }				t_token;
 
@@ -133,6 +135,7 @@ typedef struct	s_map
 	t_vector	main_v;
 	t_branch	right;
 	t_branch	left;
+	t_branch	edge;
 }				t_map;
 
 typedef struct	s_game

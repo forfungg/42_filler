@@ -6,7 +6,7 @@
 /*   By: jnovotny <jnovotny@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 18:14:41 by jnovotny          #+#    #+#             */
-/*   Updated: 2019/12/10 21:16:56 by jnovotny         ###   ########.fr       */
+/*   Updated: 2019/12/11 10:37:10 by jnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ void	adjust_right(t_map *map, t_token *token, t_coords *p)
 	{
 		tmp.x = p->x + token->tiles[i].x;
 		tmp.y = p->y + token->tiles[i].y;
-		d_o = map-> columns < 50 ? dist_right(map, &(map->right.edge)) * angle_ratio(&(map->right.edge), &(map->right.crit), 'r') : dist_right(map, &(map->right.edge));
-		d_c = map-> columns < 50 ? dist_right(map, &tmp) * angle_ratio(&tmp, &(map->right.crit), 'r') : dist_right(map, &tmp);
+		// d_o = dist_right(map, &(map->right.edge));
+		// d_c = dist_right(map, &tmp);
+		d_o = dist_right(map, &(map->right.edge)) * angle_ratio(&(map->right.edge), &(map->right.crit), 'r');
+		d_c = dist_right(map, &tmp) * angle_ratio(&tmp, &(map->right.crit), 'r');
 		if (d_c > d_o)
 			map->right.edge = tmp;
 		i++;
@@ -54,8 +56,10 @@ void	adjust_left(t_map *map, t_token *token, t_coords *p)
 	{
 		tmp.x = p->x + token->tiles[i].x;
 		tmp.y = p->y + token->tiles[i].y;
-		d_o = map-> columns < 50 ? dist_left(map, &(map->left.edge)) * angle_ratio(&(map->left.edge), &(map->left.crit), 'l') : dist_left(map, &(map->left.edge));
-		d_c = map-> columns < 50 ? dist_left(map, &tmp) * angle_ratio(&tmp, &(map->left.crit), 'l') : dist_left(map, &tmp);
+		// d_o = dist_left(map, &(map->left.edge));
+		// d_c = dist_left(map, &tmp);
+		d_o = dist_left(map, &(map->left.edge)) * angle_ratio(&(map->left.edge), &(map->left.crit), 'l');
+		d_c = dist_left(map, &tmp) * angle_ratio(&tmp, &(map->left.crit), 'l');
 		if (d_c > d_o)
 			map->left.edge = tmp;
 		i++;
