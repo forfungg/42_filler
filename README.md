@@ -14,7 +14,7 @@ The repository includes folder called resources where the referee program, maps 
 
 Download repo and make.
 ```
-git clone https://github.com/forfungg/42_filler.git; cd 42_filler; make re;
+git clone https://github.com/forfungg/42_filler.git; cd 42_filler; make;
 ```
 
 The game command syntax
