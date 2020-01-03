@@ -14,7 +14,7 @@ The repository includes folder called resources where the referee program, maps 
 
 Download repo and make.
 ```
-git clone https://github.com/forfungg/42_filler.git; cd 42_filler; make re;
+git clone https://github.com/forfungg/42_filler.git; cd 42_filler; make;
 ```
 
 The game command syntax
@@ -31,10 +31,10 @@ Try these out:
 
 [ikozlov](https://github.com/IvanKozlov95/filler) on map02
 ```
-./filler_vm -f maps/map02 -p1 players/ikozlov.filler -p2 players/jnovotny.filler
+./resources/filler_vm -f resources/maps/map02 -p1 resources/players/ikozlov.filler -p2 jnovotny.filler
 ```
 
 [mtan](https://github.com/mgia/fillerBot) on map02
 ```
-./filler_vm -f maps/map02 -p1 players/mtan.filler -p2 players/jnovotny.filler
+./resources/filler_vm -f resources/maps/map02 -p1 resources/players/mtan.filler -p2 jnovotny.filler
 ```
