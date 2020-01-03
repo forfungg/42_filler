@@ -31,10 +31,10 @@ Try these out:
 
 [ikozlov](https://github.com/IvanKozlov95/filler) on map02
 ```
-./resources/filler_vm -f resources/maps/map02 -p1 resources/players/ikozlov.filler -p2 jnovotny.filler
+./resources/filler_vm -f resources/maps/map02 -p1 resources/players/ikozlov.filler -p2 ./jnovotny.filler
 ```
 
 [mtan](https://github.com/mgia/fillerBot) on map02
 ```
-./resources/filler_vm -f resources/maps/map02 -p1 resources/players/mtan.filler -p2 jnovotny.filler
+./resources/filler_vm -f resources/maps/map02 -p1 resources/players/mtan.filler -p2 ./jnovotny.filler
 ```
