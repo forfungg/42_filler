@@ -27,7 +27,7 @@ The game command syntax
 I would recommend not to use the original players given during the assignment, since they are a bit buggy.
 Rather use one of the 2 created by other 42 students. Or find yourself some other player on github :)
 
-Try these out:
+#Try these out:
 [ikozlov](https://github.com/IvanKozlov95/filler) on map02
 ```
 ./filler_vm -f maps/map02 -p1 players/ikozlov.filler -p2 players/jnovotny.filler
