@@ -1,4 +1,5 @@
 .DS_Store
 .vscode/
+resources/
 objs/testadas.c
 TODO
