@@ -11,6 +11,7 @@ player cannot place the given token, the game ends.
 The repository includes folder called resources where the referee program, maps and other players can be found.
 
 ## Installation
+Requires ecole-42 made graphic library (minilibx)[https://github.com/gcamerli/minilibx]
 
 Download repo and make.
 ```
